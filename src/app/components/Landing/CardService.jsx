@@ -1,4 +1,4 @@
-export const Services = ({ icon, title, info }) => {
+export const CardService = ({ icon, title, info }) => {
     return (
         <div className="row mx-auto service-info">
             <div className="col-md-2">

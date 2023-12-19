@@ -1,10 +1,15 @@
-import { Header, Main, Footer } from "../components";
+import { Header, LandingContent, Footer } from "../components";
+
+import { barberInfo, barberServices, reviews } from "../../data/data";
 
 export const HomeView = () => {
   return (
     <>
       <Header />
-      <Main />
+      <LandingContent 
+        barberInfo={barberInfo}
+        barberServices={barberServices}
+        reviews={reviews} />
       <Footer />
     </>
   )

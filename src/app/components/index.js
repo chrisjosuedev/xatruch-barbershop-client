@@ -1,9 +1,6 @@
-export * from "./CardDescription";
-export * from "./Footer";
 export * from "./Header";
 export * from "./HeaderSection";
-export * from "./Main";
-export * from "./NavBar";
-export * from "./Services";
-export * from "./Slider";
-export * from "./SlideReview";
+export * from "./Footer";
+export * from "./LandingContent";
+
+export * from "./Landing";
