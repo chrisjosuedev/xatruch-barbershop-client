@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import { Features, Services, Stadistics, Testimonials } from ".";
 
 export const LandingContent = ({ barberInfo, barberServices, reviews }) => {
@@ -8,9 +9,9 @@ export const LandingContent = ({ barberInfo, barberServices, reviews }) => {
 
       <section className="info">
         <h2> Elegancia y Clase </h2>
-        <a href="#contacto__us" className="btn btn-outline-light">
+        <NavLink to={"/services"} className="btn btn-outline-light">
           Agenda una Cita
-        </a>
+        </NavLink>
         <div className="wave-info">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
             <path fill="#ffffff" fillOpacity="1"

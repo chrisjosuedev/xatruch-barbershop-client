@@ -1,9 +1,8 @@
-import { LandingPage } from "./app/pages/LandingPage";
-import "./styles/styles.css";
+import { AppRouter } from "./router/AppRouter";
 
 export const XatruchApp = () => {
 	return (
-		<LandingPage />
+		<AppRouter />
 	)
 }
 
