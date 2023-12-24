@@ -1,17 +1,17 @@
-import { NavLink } from "react-router-dom";
-import { Features, Services, Stadistics, Testimonials } from ".";
+import { Link } from "react-router-dom";
+import { Features, Stadistics, Testimonials } from ".";
 
-export const LandingContent = ({ barberInfo, barberServices, reviews }) => {
+export const LandingContent = ({ barberInfo, reviews }) => {
   return (
     <main>
-      <Features 
+      <Features
         features={barberInfo} />
 
       <section className="info">
         <h2> Elegancia y Clase </h2>
-        <NavLink to={"/services"} className="btn btn-outline-light">
+        <Link to={"/services"} className="btn btn-outline-light">
           Agenda una Cita
-        </NavLink>
+        </Link>
         <div className="wave-info">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
             <path fill="#ffffff" fillOpacity="1"
@@ -21,11 +21,9 @@ export const LandingContent = ({ barberInfo, barberServices, reviews }) => {
         </div>
       </section>
 
-      <Testimonials 
+      <Testimonials
         reviews={reviews} />
-
-      <Services
-        services={barberServices} />
+        
       <Stadistics />
     </main>
   )

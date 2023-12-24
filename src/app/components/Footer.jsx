@@ -20,25 +20,9 @@ export const Footer = () => {
                                             Home
                                         </a>
                                     </li>
-                                    <li className="syle-font">
-                                        <a href="#servicios">
-                                            Servicios
-                                        </a>
-                                    </li>
-                                    <li className="syle-font">
-                                        <a href="#contacto__us">
-                                            Contacto
-                                        </a>
-                                    </li>
                                 </ul>
 
                             </div>
-                            {
-                                /**
-                                 * TODO:
-                                 * Get Contact Info from Barbershop Info Database
-                                 */
-                            }
                             <div className="col-lg-6 info-contacto">
                                 <h3> Contactanos </h3>
                                 <ul className="list-links">

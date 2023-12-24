@@ -1,5 +1,4 @@
-import { NavLink } from "react-router-dom"
-import { Link } from "react-router-dom"
+import { NavLink, Link } from "react-router-dom"
 
 export const NavBar = () => {
 
@@ -27,18 +26,12 @@ export const NavBar = () => {
           <li className="nav-item">
             <NavLink
               className="nav-link"
-              to="/#servicios">Servicio</NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink
-              className="nav-link"
               to="/#stadistics">Stats</NavLink>
           </li>
 
           <li className="nav-item dropdown">
             <NavLink
               className="nav-link dropdown-toggle"
-             
               id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Cuenta
             </NavLink>
