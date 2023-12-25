@@ -1,5 +1,10 @@
+import { AuthLayout } from "../layout/AuthLayout"
+import { SignInView } from "../views"
+
 export const AuthPage = () => {
   return (
-    <div>AuthPage</div>
+    <AuthLayout>
+      <SignInView />
+    </AuthLayout>
   )
 }

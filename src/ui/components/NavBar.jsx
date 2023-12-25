@@ -14,19 +14,29 @@ export const NavBar = () => {
       <div className="collapse navbar-collapse" id="navbarNavDropdown">
         <ul className="navbar-nav ml-auto">
           <li className="nav-item">
-            <NavLink
+            <a
               className="nav-link"
-              to="/">Home</NavLink>
+              href="/">Home</a>
+          </li>
+          <li className="nav-item">
+            <a
+              className="nav-link"
+              href="/#us">Nosotros</a>
+          </li>
+          <li className="nav-item">
+            <a
+              className="nav-link"
+              href="/#stadistics">Stats</a>
           </li>
           <li className="nav-item">
             <NavLink
               className="nav-link"
-              to="/#us">Nosotros</NavLink>
+              to="/services">Servicios</NavLink>
           </li>
           <li className="nav-item">
             <NavLink
               className="nav-link"
-              to="/#stadistics">Stats</NavLink>
+              to="/auth/signin">Sign In</NavLink>
           </li>
 
           <li className="nav-item dropdown">
