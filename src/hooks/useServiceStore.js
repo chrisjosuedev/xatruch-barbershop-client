@@ -1,16 +1,31 @@
 import { useDispatch, useSelector } from "react-redux";
-import { xatruchBarberApi } from "../api";
 
-import { onLoadServices } from "../store";
+import { getAllServices } from "../api";
+import { onLoadServices, onSetIsLoading, onFilterServices, onResetFilter } from "../store";
 
 export const useServiceStore = () => {
-  const { services, isLoadingServices } = useSelector((state) => state.service);
   const dispatch = useDispatch();
 
+  const { services, isLoadingServices } = useSelector((state) => state.service);
+
   const startLoadingServices = async () => {
-    const { data } = await xatruchBarberApi.get("/services");
-    dispatch(onLoadServices(data.data));
+    const { data: services } = await getAllServices();
+    dispatch(onLoadServices(services));
   };
+
+  const startFilteringServices = (serviceName = "") => {
+    dispatch(onFilterServices(serviceName));
+
+    /* Set Loading to False */
+    dispatch(dispatch(onSetIsLoading()));
+  };
+
+  const startFilteringReset = () => {
+    dispatch(onResetFilter());
+
+    /* Set Loading to False */
+    dispatch(dispatch(onSetIsLoading()));
+  }
 
   return {
     // properties
@@ -19,5 +34,7 @@ export const useServiceStore = () => {
 
     // methods
     startLoadingServices,
+    startFilteringServices,
+    startFilteringReset
   };
 };

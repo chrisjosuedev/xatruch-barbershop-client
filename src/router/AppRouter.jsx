@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom"
 
 import { AuthRoutes } from "../auth/routes";
-import { PanelRoutes } from "../app/routes";
+import { CheckoutRoutes, PanelRoutes } from "../app/routes";
 
 import { LandingPage, ServicesPage } from "../app/pages";
 

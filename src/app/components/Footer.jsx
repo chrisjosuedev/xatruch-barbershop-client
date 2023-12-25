@@ -20,6 +20,16 @@ export const Footer = () => {
                                             Home
                                         </a>
                                     </li>
+                                    <li className="syle-font">
+                                        <a href="#us">
+                                            Nosotros
+                                        </a>
+                                    </li>
+                                    <li className="syle-font">
+                                        <a href="#stadistics">
+                                            Stats
+                                        </a>
+                                    </li>
                                 </ul>
 
                             </div>
@@ -50,7 +60,7 @@ export const Footer = () => {
 
             </section>
             <section className="footer-info">
-                <p>© 2022 Xatruch Barbershop. Todos los derechos reservados.</p>
+                <p>© {new Date().getFullYear()} Xatruch Barbershop. Todos los derechos reservados.</p>
             </section>
 
         </footer>
