@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 
-export const AuthForm = () => {
+export const SignUpForm = () => {
   return (
     <div className="card text-center font-weight-bold shadow animate__animated animate__fadeIn">
       <img
@@ -11,6 +11,14 @@ export const AuthForm = () => {
       <span className="brand mt-2"> XATRUCH </span>
       <div className="card-body">
         <form>
+          <div className="form-group">
+            <input
+              type="text"
+              name="name"
+              placeholder="Nombre Completo"
+              className="form-control"
+            />
+          </div>
           <div className="form-group">
             <input
               type="text"
@@ -27,24 +35,18 @@ export const AuthForm = () => {
               className="form-control"
             />
           </div>
-          <div className="form-group text-center">
-            <Link className="signup-link" to={"/auth/forgot-password/request"}>
-              ¿Olvidó su contraseña?
-            </Link>
-          </div>
 
           <button className="btn btn-dark btn-login btn-block">
-            Login
+            Registrarme
           </button>
         </form>
         <br />
         <div className="mx-auto">
           <small className="form-text text-muted text-center">
-            ¿No tienes una cuenta?
+            ¿Ya tienes una cuenta?
           </small>
-          <Link className="signup-link" to={"/auth/signup"}>Registrarse</Link>
+          <Link className="signup-link" to={"/auth/signin"}>Inciar Sesión</Link>
         </div>
-
       </div>
     </div>
   )

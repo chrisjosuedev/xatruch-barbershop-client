@@ -8,6 +8,11 @@ export const useServiceStore = () => {
 
   const { services, isLoadingServices } = useSelector((state) => state.service);
 
+  const startSetIsLoading = () => {
+    dispatch(dispatch(onSetIsLoading()));
+  }
+
+
   const startLoadingServices = async () => {
     const { data: services } = await getAllServices();
     dispatch(onLoadServices(services));
@@ -35,6 +40,7 @@ export const useServiceStore = () => {
     // methods
     startLoadingServices,
     startFilteringServices,
-    startFilteringReset
+    startFilteringReset,
+    startSetIsLoading
   };
 };

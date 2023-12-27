@@ -1,59 +1,76 @@
-import { useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom"
+import { useEffect, useMemo, useState } from "react";
 
 import { useForm } from "react-hook-form";
-import queryString from "query-string";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons"
 
-import { NavBar } from "../../ui"
+import { NavBar } from "../../ui";
 import { useServiceStore } from "../../hooks";
-import { CardDetailService, SpinnerLoader } from "../components";
+import { Message, ServicesGrid, SpinnerLoader } from "../components";
 
 export const ServicesView = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
 
-  const { q = "" } = queryString.parse(location.search);
+  const [message, setMessage] = useState("");
+  const [success, setSuccess] = useState(true);
 
   const { services,
     isLoadingServices,
     startLoadingServices,
     startFilteringServices,
+    startSetIsLoading,
     startFilteringReset } = useServiceStore();
 
 
+  // Control Form 
   const { register, handleSubmit, setFocus, formState: {
     errors
   } } = useForm({
     defaultValues: {
-      searchText: q
+      searchText: ""
     }
   });
 
-  const showSearch = (q.length === 0);
-  const showError = (services.length === 0);
-
   // Load Initial Services Data
   useEffect(() => {
-    startLoadingServices();
+    const fetchServices = async () => {
+      try {
+        await startLoadingServices();
+        setSuccess(true);
+      } catch (error) {
+        const { message } = error;
+        startSetIsLoading();
+        setMessage(message + " 👻");
+        setSuccess(false);
+      }
+    }
+    fetchServices();
     setFocus("searchText");
   }, []);
 
+  // Search Service
   const onSearchSubmit = (data) => {
     const { searchText } = data;
-
     if (searchText.length === 0) return;
 
     startFilteringServices(searchText);
-    navigate(`?q=${searchText}`);
   }
 
+  // Restore services when Input Change
   const onChangeSearch = (e) => {
     const searchChange = e.target.value;
     if (!!searchChange || searchChange.length === 0) startFilteringReset();
   }
+
+  // Render Messages or Services
+  const renderServices = useMemo(() => {
+    if (!success) return (<Message message={message} type="danger" />);
+    if (services.length === 0) {
+      setMessage("Lo sentimos, no encontramos los servicios 😔");
+      return (<Message message={message} type="dark" />);
+    }
+    return (<ServicesGrid services={services} />)
+  }, [success, message, services]);
 
   return (
     <div className="container-fluid">
@@ -70,11 +87,7 @@ export const ServicesView = () => {
                     type="text"
                     className={`form-control ${errors.searchText ? 'is-invalid' : ''}`}
                     {...register("searchText", {
-                      onChange: onChangeSearch,
-                      minLength: {
-                        value: 2,
-                        message: "Ingrese un tag ó nombre de servicio."
-                      }
+                      onChange: onChangeSearch
                     })}
                     autoComplete="off"
                     placeholder="Nombre del Servicio..."
@@ -94,30 +107,11 @@ export const ServicesView = () => {
               </div>
             </form>
           </div>
-
-
           <div className="col-md-7">
             <h4><b>Servicios Disponibles</b></h4>
             <hr />
-            <div
-              className="alert alert-danger animate__animated animate__fadeIn"
-              style={{ display: showError && !showSearch ? '' : 'none' }}
-            >
-              No resultados con: <b>{q}</b>
-            </div>
-            {(isLoadingServices) && (<SpinnerLoader />)}
-            {
-              services.map((serv) => (
-                <CardDetailService
-                  key={serv.id}
-                  id={serv.id}
-                  serviceName={serv.serviceName}
-                  price={serv.price}
-                />
-              ))
-            }
+            {isLoadingServices ? <SpinnerLoader /> : renderServices}
           </div>
-
         </div>
       </div>
     </div>
