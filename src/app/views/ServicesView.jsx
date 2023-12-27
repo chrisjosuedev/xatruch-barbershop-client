@@ -75,7 +75,7 @@ export const ServicesView = () => {
   return (
     <div className="container-fluid">
       <NavBar />
-      <div className="container animate__animated animate__fadeIn">
+      <div className="container">
         <div className="row p-4">
           <div className="col-md-5">
             <h4> <b> Filtrar </b></h4>

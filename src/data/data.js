@@ -1,3 +1,5 @@
+export const authStatus = ["checking", "authenticated", "not-authenticated"];
+
 export const barberInfo = [
   {
     icon: "icon_01",

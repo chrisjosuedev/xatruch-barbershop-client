@@ -1,6 +1,20 @@
 import { Link } from "react-router-dom"
+import { useForm } from "react-hook-form";
+
+import { useAuthStore } from "../../hooks"
 
 export const AuthForm = () => {
+
+  const { startLogin, message } = useAuthStore();
+
+  const { register, handleSubmit } = useForm();
+
+  const onSubmit = (data) => {
+    const { email, password } = data;
+    startLogin({ email, password });
+  }
+
+
   return (
     <div className="card text-center font-weight-bold shadow animate__animated animate__fadeIn">
       <img
@@ -10,11 +24,13 @@ export const AuthForm = () => {
       />
       <span className="brand mt-2"> XATRUCH </span>
       <div className="card-body">
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-group">
             <input
               type="text"
-              name="Email"
+              {...register("email", {
+                required: true
+              })}
               placeholder="Email"
               className="form-control"
             />
@@ -22,7 +38,9 @@ export const AuthForm = () => {
           <div className="form-group">
             <input
               type="password"
-              name="password"
+              {...register("password", { 
+                required: true 
+              })}
               placeholder="Password"
               className="form-control"
             />

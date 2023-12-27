@@ -1,13 +1,13 @@
-import { NavLink, Link } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 
 export const NavBar = () => {
 
   return (
     <nav className="navbar navbar-expand-lg nav-xatruch navbar-light bg-lignt">
-      <Link to="/" className="navbar-brand">
+      <a href="/" className="navbar-brand">
         <img src="/assets/img/icon.png" className="img-logo" alt="logo" />
         <span className="brand"> XATRUCH </span>
-      </Link>
+      </a>
       <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span className="navbar-toggler-icon"></span>
       </button>

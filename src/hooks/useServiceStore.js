@@ -33,7 +33,7 @@ export const useServiceStore = () => {
   }
 
   return {
-    // properties
+    // props
     services,
     isLoadingServices,
 

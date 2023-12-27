@@ -17,7 +17,7 @@ export const CardDetailService = ({ id, serviceName, price }) => {
   }
 
   return (
-    <div className="card m-2">
+    <div className="card m-2  animate__animated animate__fadeIn">
       <div className="card-body">
         <div className="row">
           <div className="col-md-8">
