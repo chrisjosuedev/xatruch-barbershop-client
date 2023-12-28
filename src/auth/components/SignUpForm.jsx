@@ -3,12 +3,8 @@ import { Link } from "react-router-dom"
 export const SignUpForm = () => {
   return (
     <div className="card text-center font-weight-bold shadow animate__animated animate__fadeIn">
-      <img
-        src="/assets/img/icon.png"
-        alt="barbershop"
-        className="card-img-top mx-auto mt-4 w-25"
-      />
-      <span className="brand mt-2"> XATRUCH </span>
+      <span className="brand mt-4"> REGISTRARSE </span>
+      <hr />
       <div className="card-body">
         <form>
           <div className="form-group">

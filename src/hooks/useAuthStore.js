@@ -1,31 +1,43 @@
 import { useDispatch, useSelector } from "react-redux";
-import { onChecking, onLogin, onLogout } from "../store";
+import { onChecking, onLogin, onLogout, onSetAuthErrors } from "../store";
 import { renewToken, singIn } from "../api";
 
 export const useAuthStore = () => {
-  const { user, currentStatus, message } = useSelector((state) => state.auth);
+  const { user, currentStatus, message, errors } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+
+  const startLogout = () => {
+    const token = localStorage.getItem("token");
+    if (!token) return dispatch(onLogout(message));
+
+    // If token exists...
+    localStorage.removeItem("token");
+    dispatch(onLogout());
+  };
 
   // Login User
   const startLogin = async ({ email, password }) => {
-    dispatch(onChecking());
     try {
       const { user, message } = await singIn(email, password);
       const { token, ...profile } = user;
       localStorage.setItem("token", token);
       dispatch(onLogin({ profile, message }));
     } catch (error) {
-      console.log(error);
-      // TODO: Get error from request.
-      dispatch(onLogout("Error al iniciar sesión..."));
+      const {
+        response: {
+          data: { message, errors },
+        },
+      } = error;
+      dispatch(onSetAuthErrors({ message, errors }));
+      throw new Error(error);
     }
   };
 
   // Check Token and Refresing Session
   const startCheckingToken = async () => {
+    dispatch(onChecking());
     const token = localStorage.getItem("token");
-    if (!token)
-      return dispatch(onLogout("Error al renovar sesión, inice nuevamente."));
+    if (!token) return dispatch(onLogout());
     try {
       const { user } = await renewToken(token);
       const { token: newToken, ...profile } = user;
@@ -34,9 +46,8 @@ export const useAuthStore = () => {
 
       dispatch(onLogin({ profile }));
     } catch (error) {
-      // TODO: Handle Error
       localStorage.clear();
-      dispatch(onLogout("Error al renovar sesión, inice nuevamente."));
+      dispatch(onLogout());
     }
   };
 
@@ -45,9 +56,11 @@ export const useAuthStore = () => {
     user,
     currentStatus,
     message,
+    errors,
 
     // methods
     startCheckingToken,
     startLogin,
+    startLogout,
   };
 };

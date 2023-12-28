@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons"
 
-import { NavBar } from "../../ui";
 import { useServiceStore } from "../../hooks";
 import { Message, ServicesGrid, SpinnerLoader } from "../components";
 
@@ -23,9 +22,7 @@ export const ServicesView = () => {
 
 
   // Control Form 
-  const { register, handleSubmit, setFocus, formState: {
-    errors
-  } } = useForm({
+  const { register, handleSubmit, setFocus } = useForm({
     defaultValues: {
       searchText: ""
     }
@@ -74,7 +71,6 @@ export const ServicesView = () => {
 
   return (
     <div className="container-fluid">
-      <NavBar />
       <div className="container">
         <div className="row p-4">
           <div className="col-md-5">
@@ -85,16 +81,13 @@ export const ServicesView = () => {
                 <div className="col-md-10 mt-2">
                   <input
                     type="text"
-                    className={`form-control ${errors.searchText ? 'is-invalid' : ''}`}
+                    className="form-control"
                     {...register("searchText", {
                       onChange: onChangeSearch
                     })}
                     autoComplete="off"
                     placeholder="Nombre del Servicio..."
                   />
-                  <span className="invalid-feedback">
-                    {errors.searchText && errors.searchText.message}
-                  </span>
                 </div>
                 <div className="col-md-2 mt-2">
                   <button className="btn btn-dark">

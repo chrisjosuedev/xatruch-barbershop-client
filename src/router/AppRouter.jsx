@@ -14,10 +14,10 @@ export const AppRouter = () => {
   const { currentStatus, startCheckingToken } = useAuthStore();
 
   useEffect(() => {
-    startCheckingToken()
+    startCheckingToken();
   }, []);
 
-  if (currentStatus === authStatus[0]) return (<AuthLoader />)
+  if (currentStatus === authStatus[0]) return (<AuthLoader />);
 
   return (
     <Routes>
