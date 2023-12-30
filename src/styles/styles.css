@@ -52,6 +52,7 @@ body {
   padding: 1% 15% 10%;
 }
 
+
 .nav-item {
   padding: 0 1.125rem;
 }
@@ -175,6 +176,20 @@ h1 {
 .dots-1 {
   position: relative;
   margin-left: 150px;
+}
+
+.btn-sidebar {
+  text-align: left;
+  background-color: white;
+}
+
+.btn-sidebar:hover {
+  background-color: rgb(241, 241, 241);
+}
+
+
+.side-active {
+  background-color: rgb(241, 241, 241);
 }
 
 /* Info Asesor */
@@ -587,6 +602,10 @@ footer {
   color: #d9dbe1;
   font-weight: 400;
   font-size: 14px;
+}
+
+.dropdown-item:focus {
+  background-color: white;
 }
 
 /* Panel */

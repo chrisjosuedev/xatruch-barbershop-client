@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom"
-import { PanelPage } from "../pages"
+import { AdminPanelPage } from "../pages"
 
 export const AdminRoutes = () => {
   // TODO: 
@@ -13,7 +13,7 @@ export const AdminRoutes = () => {
 
   return (
     <Routes>
-      <Route path="/" element={<PanelPage />} />
+      <Route path="/" element={<AdminPanelPage />} />
       <Route path="/*" element={<Navigate to={"/settings"} />} />
     </Routes>
   )
