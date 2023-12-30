@@ -74,7 +74,7 @@ export const NavBar = () => {
               - Perfil option to: "/portal/admin" if admin, "/portal/user" if user
             */}
                   <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <NavLink className="dropdown-item" to="/portal/">Perfil</NavLink>
+                    <NavLink className="dropdown-item" to="/account">Cuenta</NavLink>
                     <a style={{ cursor: "pointer" }} className="dropdown-item" onClick={onLogout}>Cerrar Sesión</a>
                   </div>
                 </li>

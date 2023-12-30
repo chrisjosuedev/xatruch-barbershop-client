@@ -1,3 +1,22 @@
+export const fullNameValidations = {
+  required: {
+    value: true,
+    message: "Nombre Completo es requerido."
+  },
+  minLength: {
+      value: 2,
+      message: "Nombre Completo debe contener al menos 2 caracteres.",
+  },
+  maxLength: {
+      value: 64,
+      message: "Nombre Completo debe contener menos de 64 caracteres.",
+  },
+  pattern: {
+      value: /^[a-zA-Z\s]+$/,
+      message: "Nombre Completo inválido.",
+  },
+}
+
 export const emailValidations = {
   required: {
     value: true,
@@ -16,11 +35,7 @@ export const passwordValidations = {
       message: "Password es requerida.",
   },
   minLength: {
-      value: 2,
-      message: "Nombre debe contener al menos 2 caracteres.",
-  },
-  maxLength: {
-      value: 64,
-      message: "Tamaño máximo debe ser de 64 caracteres.",
+      value: 8,
+      message: "Password debe contener al menos 8 caracteres.",
   }
 };

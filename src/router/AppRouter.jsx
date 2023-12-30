@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom"
 
 import { AuthRoutes } from "../auth/routes";
-import { CheckoutRoutes, PanelRoutes } from "../app/routes";
+import { AdminRoutes, CheckoutRoutes, UserRoutes } from "../app/routes";
 
 import { LandingPage, ServicesPage } from "../app/pages";
 import { useAuthStore } from "../hooks";
@@ -11,7 +11,7 @@ import { AuthLoader } from "../ui";
 
 export const AppRouter = () => {
 
-  const { currentStatus, startCheckingToken } = useAuthStore();
+  const { user: { role }, currentStatus, startCheckingToken } = useAuthStore();
 
   useEffect(() => {
     startCheckingToken();
@@ -27,7 +27,8 @@ export const AppRouter = () => {
           :
           (
             <>
-              <Route path="/panel/*" element={<PanelRoutes />} />
+              {(role === "ADMIN") && <Route path="/settings/*" element={<AdminRoutes />} />}
+              <Route path="/account/*" element={<UserRoutes />} />
               <Route path="/checkout/*" element={<CheckoutRoutes />} />
             </>
           )

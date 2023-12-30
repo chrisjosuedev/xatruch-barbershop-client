@@ -1,35 +1,85 @@
-import { Link } from "react-router-dom"
+import { useEffect } from "react"
+import { useForm } from "react-hook-form"
+
+import Swal from "sweetalert2"
+
+import { Link, useNavigate } from "react-router-dom"
+import { useAuthStore } from "../../hooks"
+
+import { alertSuccess, emailValidations, fullNameValidations, passwordValidations } from "../../helpers"
+
+const initForm = {
+  fullName: "",
+  email: "",
+  password: ""
+}
 
 export const SignUpForm = () => {
+
+  const navigate = useNavigate();
+
+  const { errors: authErrors, startRegister } = useAuthStore();
+  const { register, formState: { errors }, setError, handleSubmit } = useForm({ defaultValues: initForm });
+
+  useEffect(() => {
+    for (const error of authErrors) {
+      setError(error.field, {
+        type: "server",
+        message: error.message
+      });
+    }
+  }, [authErrors]);
+
+  const onSubmit = async (data) => {
+    const { fullName, email, password } = data;
+
+    startRegister({ fullName, email, password })
+      .then(() => {
+        const successInfo = alertSuccess(`Registro Existoso, ¡Bienvenido ${fullName}!`);
+        Swal.fire(successInfo);
+        navigate("/services");
+      });
+  };
+
+
   return (
     <div className="card text-center font-weight-bold shadow animate__animated animate__fadeIn">
       <span className="brand mt-4"> REGISTRARSE </span>
       <hr />
       <div className="card-body">
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-group">
             <input
               type="text"
-              name="name"
+              className={`form-control ${errors.fullName ? 'is-invalid' : ''}`}
+              {...register("fullName", fullNameValidations)}
               placeholder="Nombre Completo"
-              className="form-control"
             />
+            <small className="invalid-feedback text-left">
+              {errors.fullName && errors.fullName.message}
+            </small>
           </div>
           <div className="form-group">
             <input
               type="text"
-              name="Email"
+              className={`form-control ${errors.email ? 'is-invalid' : ''}`}
+              {...register("email", emailValidations)}
               placeholder="Email"
-              className="form-control"
             />
+            <small className="invalid-feedback text-left">
+              {errors.email && errors.email.message}
+            </small>
           </div>
           <div className="form-group">
             <input
               type="password"
-              name="password"
+              className={`form-control ${errors.password ? 'is-invalid' : ''}`}
+              {...register("password", passwordValidations)}
               placeholder="Password"
-              className="form-control"
             />
+            <small className="invalid-feedback text-left">
+              {errors.password && errors.password.message}
+            </small>
           </div>
 
           <button className="btn btn-dark btn-login btn-block">
