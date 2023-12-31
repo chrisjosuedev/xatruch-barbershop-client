@@ -1,12 +1,13 @@
 import { NavLink } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faUser, faList, faCalendarCheck, faKey } from "@fortawesome/free-solid-svg-icons"
+import { faUser, faList, faCalendarCheck, faKey, faGear } from "@fortawesome/free-solid-svg-icons"
 
 export const AccountLayout = ({ children }) => {
   return (
     <div className="container" style={{ marginTop: "120px" }}>
-      <h3>Perfil</h3>
-      <hr />
+      <h3 className="mb-4" style={{ fontSize: "20px", fontWeight: "bold" }}>
+        <FontAwesomeIcon icon={faGear} /> General
+      </h3>
       <div className="row">
         <div className="col-md-4">
           <div className="card">

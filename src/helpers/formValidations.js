@@ -39,3 +39,33 @@ export const passwordValidations = {
       message: "Password debe contener al menos 8 caracteres.",
   }
 };
+
+export const titleValidations = {
+  required: {
+    value: true,
+    message: "Título de la Review es requerida."
+  },
+  minLength: {
+      value: 2,
+      message: "Título de la Review debe contener al menos 2 caracteres.",
+  },
+  maxLength: {
+      value: 64,
+      message: "Título de la Review debe contener menos de 64 caracteres.",
+  }
+}
+
+export const reviewValidations = {
+  required: {
+    value: true,
+    message: "Review es requerida."
+  },
+  minLength: {
+      value: 2,
+      message: "eview debe contener al menos 2 caracteres.",
+  },
+  maxLength: {
+      value: 100,
+      message: "Review debe contener menos de 100 caracteres.",
+  }
+}

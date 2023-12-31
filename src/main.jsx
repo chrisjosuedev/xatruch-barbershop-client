@@ -8,6 +8,7 @@ import { XatruchApp } from './XatruchApp.jsx';
 import { store } from "./store";
 
 import "./styles/styles.css";
+import "./styles/modal-styles.css";
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

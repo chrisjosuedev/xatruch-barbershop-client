@@ -34,7 +34,7 @@ export const AuthForm = () => {
     const { email, password } = data;
     startLogin({ email, password })
       .then(() => {
-        const successInfo = alertSuccess("¡Bienvenido!");
+        const successInfo = alertSuccess("Inicio de Sesión Exitoso");
         Swal.fire(successInfo);
         navigate("/services");
       });

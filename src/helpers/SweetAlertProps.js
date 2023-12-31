@@ -13,12 +13,12 @@ export const alertInfo = (title, icon, confirmText) => {
   };
 };
 
-export const alertSuccess = (title) => {
+export const alertSuccess = (title, icon = "success") => {
   return {
     position: "center",
-    icon: "success",
-    title: title,
+    icon,
+    title,
     showConfirmButton: false,
-    timer: 1500,
+    timer: 2500,
   };
 };

@@ -16,7 +16,7 @@ export const singIn = async (email, password) => {
   });
   return {
     user: data,
-    message: message,
+    message,
   };
 };
 
@@ -28,6 +28,6 @@ export const signUp = async (fullName, email, password) => {
   });
   return {
     user: data,
-    message: message,
+    message,
   };
 };

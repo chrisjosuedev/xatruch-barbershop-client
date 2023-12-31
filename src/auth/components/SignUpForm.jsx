@@ -35,7 +35,7 @@ export const SignUpForm = () => {
 
     startRegister({ fullName, email, password })
       .then(() => {
-        const successInfo = alertSuccess(`Registro Existoso, ¡Bienvenido ${fullName}!`);
+        const successInfo = alertSuccess(`Registro Existoso, ¡Hola, ${fullName}!`);
         Swal.fire(successInfo);
         navigate("/services");
       });
