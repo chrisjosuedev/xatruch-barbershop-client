@@ -1,18 +1,21 @@
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useReviewStore } from "../../../hooks/useReviewStore"
 import { AddReviewButton, ReviewsModal, ReviewsTable } from "../../components/Reviews"
+import { Message, SpinnerLoader } from "../../components";
 
 export const UserReviewsView = () => {
-
-  const { userReviews, startLoadingUserReviews } = useReviewStore();
-
-  /**
-   * TODO: Conditional Rendering...
-   */
+  const { userReviews, isLoadingReviews, startLoadingUserReviews } = useReviewStore();
 
   useEffect(() => {
     startLoadingUserReviews();
   }, []);
+
+  // Render Messages or User Reviews
+  const renderUserReviews = useMemo(() => {
+    if (userReviews.length === 0)
+      return (<Message message={"No parece haber nada por aquí... 😔"} type="dark" />);
+    return (<ReviewsTable data={userReviews} />)
+  }, [userReviews]);
 
   return (
     <div className="row">
@@ -24,7 +27,7 @@ export const UserReviewsView = () => {
         <AddReviewButton />
       </div>
       <div className="col-md-12">
-        <ReviewsTable data={userReviews} />
+        {(isLoadingReviews) ? <SpinnerLoader /> : renderUserReviews}
       </div>
       <ReviewsModal />
     </div>

@@ -50,8 +50,8 @@ export const titleValidations = {
       message: "Título de la Review debe contener al menos 2 caracteres.",
   },
   maxLength: {
-      value: 64,
-      message: "Título de la Review debe contener menos de 64 caracteres.",
+      value: 20,
+      message: "Título de la Review debe contener menos de 20 caracteres.",
   }
 }
 
@@ -62,7 +62,7 @@ export const reviewValidations = {
   },
   minLength: {
       value: 2,
-      message: "eview debe contener al menos 2 caracteres.",
+      message: "Review debe contener al menos 2 caracteres.",
   },
   maxLength: {
       value: 100,

@@ -18,12 +18,14 @@ export const reviewsSlice = createSlice({
     onDeleteReview: (state) => {},
     onLoadUserReviews: (state, { payload }) => {
       payload.forEach((review) => {
-        const exists = state.userReviews.some(reviewInStore => reviewInStore.id === review.id);
+        const exists = state.userReviews.some(
+          (reviewInStore) => reviewInStore.id === review.id
+        );
         if (!exists) {
           const { user, ...rest } = review;
           state.userReviews.push(rest);
         }
-      })
+      });
       state.isLoadingReviews = false;
     },
     onClearMessage: (state) => {
@@ -37,6 +39,13 @@ export const reviewsSlice = createSlice({
     },
     onLoadReviews: (state, { payload }) => {},
     onApproveReviews: (state, { payload }) => {},
+    onLogoutReviews: (state) => {
+      state.userReviews = [];
+      state.reviews = [];
+      state.activeReview = null;
+      state.isLoadingReviews = true;
+      state.message = undefined;
+    },
   },
 });
 
@@ -50,4 +59,5 @@ export const {
   onSetLoadingReview,
   onSetSelectedReview,
   onUpdateReview,
+  onLogoutReviews,
 } = reviewsSlice.actions;

@@ -21,11 +21,13 @@ export const AuthForm = () => {
   const { register, handleSubmit, setError, formState: { errors } } = useForm({ defaultValues: initForm });
 
   useEffect(() => {
-    for (const error of authErrors) {
-      setError(error.field, {
-        type: "server",
-        message: error.message
-      });
+    if (authErrors && authErrors.length > 0) {
+      for (const error of authErrors) {
+        setError(error.field, {
+          type: "server",
+          message: error.message
+        });
+      }
     }
   }, [authErrors]);
 

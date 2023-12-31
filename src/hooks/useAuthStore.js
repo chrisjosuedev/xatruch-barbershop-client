@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { onChecking, onLogin, onLogout, onSetAuthErrors } from "../store";
+import { onChecking, onLogin, onLogout, onLogoutReviews, onSetAuthErrors } from "../store";
 import { renewToken, signUp, singIn } from "../api";
 
 export const useAuthStore = () => {
@@ -14,6 +14,12 @@ export const useAuthStore = () => {
 
     // If token exists...
     localStorage.removeItem("token");
+    
+    // Clean States...
+    // Reviews
+    dispatch(onLogoutReviews());
+
+    // Logout the App
     dispatch(onLogout());
   };
 
@@ -48,7 +54,6 @@ export const useAuthStore = () => {
           data: { message, errors },
         },
       } = error;
-      console.log(errors);
       dispatch(onSetAuthErrors({ message, errors }));
       throw new Error(error);
     }

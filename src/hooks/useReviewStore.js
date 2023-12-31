@@ -6,6 +6,7 @@ import {
   onSetSelectedReview,
 } from "../store/reviews/reviewsSlice";
 import { getUserReviews, saveReview } from "../api/fetch/review";
+import { onSetIsLoading } from "../store";
 
 export const useReviewStore = () => {
   const { reviews, userReviews, activeReview, isLoadingReviews, message } =
@@ -16,6 +17,10 @@ export const useReviewStore = () => {
     const reviews = await getUserReviews();
     dispatch(onLoadUserReviews(reviews));
   };
+
+  const startSetIsLoadingUserReviews = () => {
+    dispatch(onSetIsLoading());
+  }
 
   const setActiveReview = (review) => {
     dispatch(onSetSelectedReview(review));
@@ -49,5 +54,6 @@ export const useReviewStore = () => {
     startLoadingUserReviews,
     setActiveReview,
     startSavingReview,
+    startSetIsLoadingUserReviews
   };
 };
