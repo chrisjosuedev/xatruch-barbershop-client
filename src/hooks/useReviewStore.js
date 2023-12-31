@@ -2,16 +2,28 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   onAddNewReview,
   onClearMessage,
+  onDeleteReview,
+  onFindUserReview,
   onLoadUserReviews,
   onSetSelectedReview,
+  onUpdateReview,
 } from "../store/reviews/reviewsSlice";
-import { getUserReviews, saveReview } from "../api/fetch/review";
+import {
+  deleteReview,
+  getUserReviews,
+  saveReview,
+  updateReview,
+} from "../api/fetch/review";
 import { onSetIsLoading } from "../store";
 
 export const useReviewStore = () => {
   const { reviews, userReviews, activeReview, isLoadingReviews, message } =
     useSelector((state) => state.review);
   const dispatch = useDispatch();
+
+  const startSetActiveUserReview = (id) => {
+    dispatch(onFindUserReview({ id }));
+  };
 
   const startLoadingUserReviews = async () => {
     const reviews = await getUserReviews();
@@ -20,7 +32,7 @@ export const useReviewStore = () => {
 
   const startSetIsLoadingUserReviews = () => {
     dispatch(onSetIsLoading());
-  }
+  };
 
   const setActiveReview = (review) => {
     dispatch(onSetSelectedReview(review));
@@ -28,8 +40,12 @@ export const useReviewStore = () => {
 
   const startSavingReview = async ({ id, title, review }) => {
     if (id) {
-      console.log("Update review....");
-
+      const { review: reviewUpdated, message } = await updateReview({
+        id,
+        title,
+        review,
+      });
+      dispatch(onUpdateReview({ reviewUpdated, message }));
       setTimeout(() => {
         dispatch(onClearMessage());
       }, 10);
@@ -42,18 +58,28 @@ export const useReviewStore = () => {
     }, 10);
   };
 
+  const startDeletingUserReview = async (id) => {
+    const { message } = await deleteReview(id);
+    dispatch(onDeleteReview({ message }));
+    setTimeout(() => {
+      dispatch(onClearMessage());
+    }, 10);
+  };
+
   return {
     // props
-    reviews,
-    userReviews,
     activeReview,
     isLoadingReviews,
     message,
+    reviews,
+    userReviews,
 
     // methods
-    startLoadingUserReviews,
     setActiveReview,
+    startDeletingUserReview,
+    startLoadingUserReviews,
     startSavingReview,
-    startSetIsLoadingUserReviews
+    startSetActiveUserReview,
+    startSetIsLoadingUserReviews,
   };
 };

@@ -17,15 +17,22 @@ const columns = [
     header: "¿Aprobada?",
     accessorKey: "isApproved",
     cell: (props) => (
-      (props.getValue() ? 
-        <FontAwesomeIcon className="text-success" icon={faThumbsUp} /> : 
+      (props.getValue() ?
+        <FontAwesomeIcon className="text-success" icon={faThumbsUp} /> :
         <FontAwesomeIcon className="text-danger" icon={faThumbsDown} />)
     )
   },
   {
     header: "",
     accessorKey: "id",
-    cell: (props) => (<Actions values={props.getValue()} />)
+    cell: (props) => {
+      const { isApproved } = props.row.original;
+      const actionsRows = {
+        id: props.getValue(),
+        isApproved
+      }
+      return (<Actions values={actionsRows} />)
+    }
   }
 ];
 

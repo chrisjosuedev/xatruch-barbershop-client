@@ -14,8 +14,20 @@ export const reviewsSlice = createSlice({
       state.userReviews.push(payload.reviewSaved);
       state.message = payload.message;
     },
-    onUpdateReview: (state, { payload }) => {},
-    onDeleteReview: (state) => {},
+    onUpdateReview: (state, { payload }) => {
+      state.userReviews = state.userReviews.map((review) => {
+        if (payload.reviewUpdated.id !== review.id) return review;
+        return payload.reviewUpdated;
+      });
+      state.message = payload.message;
+      state.activeReview = null;
+    },
+    onDeleteReview: (state, { payload }) => {
+      state.userReviews = state.userReviews.filter((review) => {
+        return review.id !== state.activeReview.id;
+      });
+      state.message = payload.message;
+    },
     onLoadUserReviews: (state, { payload }) => {
       payload.forEach((review) => {
         const exists = state.userReviews.some(
@@ -37,6 +49,11 @@ export const reviewsSlice = createSlice({
     onSetSelectedReview: (state, { payload }) => {
       state.activeReview = payload;
     },
+    onFindUserReview: (state, { payload }) => {
+      state.activeReview = state.userReviews.find(
+        (review) => review.id === payload.id
+      );
+    },
     onLoadReviews: (state, { payload }) => {},
     onApproveReviews: (state, { payload }) => {},
     onLogoutReviews: (state) => {
@@ -54,6 +71,7 @@ export const {
   onApproveReviews,
   onClearMessage,
   onDeleteReview,
+  onFindUserReview,
   onLoadReviews,
   onLoadUserReviews,
   onSetLoadingReview,

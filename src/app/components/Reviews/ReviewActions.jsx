@@ -2,30 +2,42 @@ import Swal from "sweetalert2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useUiStore } from "../../../hooks/useUiStore";
+import { useReviewStore } from "../../../hooks/useReviewStore";
+import { alertInfo } from "../../../helpers";
 
-export const Actions = ({ values }) => {
-
+export const Actions = ({ values: { id, isApproved } }) => {
+  const { startSetActiveUserReview, startDeletingUserReview } = useReviewStore();
   const { startOpenModal } = useUiStore();
 
   const onUpdate = (id) => {
-    // TODO: Find review and set to active...
+    startSetActiveUserReview(id);
     startOpenModal();
-    console.log(id);
   }
 
   const onDelete = (id) => {
-    console.log(id);
+    startSetActiveUserReview(id);
+    const logoutInfo = alertInfo("¿Seguro que desea eliminar la review?", "info", "Si");
+    Swal.fire(logoutInfo).then((result) => {
+      if (result.isConfirmed) startDeletingUserReview(id);
+    });
   }
 
   return (
     <>
-      <button onClick={() => onUpdate(values)} className="btn btn-info mr-2 mt-2">
+      <button onClick={() => onUpdate(id)} className="btn btn-info mr-2 mt-2">
         <FontAwesomeIcon icon={faEdit} />
       </button>
-      <button onClick={() => onDelete(values)} className="btn btn-danger mt-2"
-      >
-        <FontAwesomeIcon icon={faTrash} />
-      </button>
+      {
+        !isApproved && (
+          <button
+            className="btn btn-danger mt-2"
+            onClick={() => onDelete(id)}
+          >
+            <FontAwesomeIcon icon={faTrash} />
+          </button>
+        )
+      }
+
     </>
   )
 }

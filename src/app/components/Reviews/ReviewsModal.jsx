@@ -26,21 +26,26 @@ export const ReviewsModal = () => {
     handleSubmit,
     clearErrors, reset, formState: { errors } } = useForm({ defaultValues: initForm });
 
-  const { startSavingReview, message } = useReviewStore();
+  const { startSavingReview, message, activeReview } = useReviewStore();
   const { isModalOpen, startCloseModal } = useUiStore();
 
   const closeModalAndClean = () => {
-    startCloseModal();
-    clearErrors();
     reset();
+    clearErrors();
+    startCloseModal();
   }
 
+  // Message when action Finished
   useEffect(() => {
     if (message !== undefined) {
       const successInfo = alertSuccess(message, "success");
       Swal.fire(successInfo);
     }
   }, [message]);
+
+  useEffect(() => {
+    if (activeReview !== null) reset(activeReview);
+  }, [activeReview]);
 
   const onSubmit = async (data) => {
     try {
