@@ -16,10 +16,10 @@ export const AuthForm = () => {
 
   const navigate = useNavigate();
 
-  const { startLogin, message, errors: authErrors } = useAuthStore();
+  const { startLogin, errors: authErrors } = useAuthStore();
 
   const { register, handleSubmit, setError, formState: { errors } } = useForm({ defaultValues: initForm });
-
+  
   useEffect(() => {
     if (authErrors && authErrors.length > 0) {
       for (const error of authErrors) {
@@ -30,7 +30,6 @@ export const AuthForm = () => {
       }
     }
   }, [authErrors]);
-
 
   const onSubmit = async (data) => {
     const { email, password } = data;
@@ -47,13 +46,6 @@ export const AuthForm = () => {
       <span className="brand mt-4"> INICIAR SESIÓN </span>
       <hr />
       <div className="card-body">
-        {
-          (message) && (
-            <div className="alert alert-danger" role="alert">
-              <small>{message}</small>
-            </div>)
-        }
-
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-row mb-2">
             <input

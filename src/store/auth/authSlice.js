@@ -7,7 +7,8 @@ export const authSlice = createSlice({
     currentStatus: authStatus[0],
     user: {},
     message: undefined,
-    errors: []
+    errors: [],
+    isLoadingPicture: false,
   },
   reducers: {
     onChecking: (state) => {
@@ -32,11 +33,30 @@ export const authSlice = createSlice({
       state.errors = payload.errors;
       state.message = payload.message;
     },
-    onClearMessage: (state) => {
+    onClearAuthMessages: (state) => {
       state.message = undefined;
       state.errors = [];
     },
+    onUpdateProfileImage: (state, { payload }) => {
+      state.user.profileUrl = payload;
+      state.isLoadingPicture = false;
+    },
+    onUpdateUser: (state, { payload }) => {
+      state.user = payload;
+    },
+    onSetLoadingProfileImage: (state, { payload }) => {
+      state.isLoadingPicture = payload;
+    }
   },
 });
 
-export const { onChecking, onLogin, onLogout, onSetAuthErrors } = authSlice.actions;
+export const {
+  onChecking,
+  onClearAuthMessages,
+  onLogin,
+  onLogout,
+  onSetAuthErrors,
+  onSetLoadingProfileImage,
+  onUpdateProfileImage,
+  onUpdateUser,
+} = authSlice.actions;

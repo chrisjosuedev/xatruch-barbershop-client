@@ -1,20 +1,30 @@
 import { useDispatch, useSelector } from "react-redux";
-import { onChecking, onLogin, onLogout, onLogoutReviews, onSetAuthErrors } from "../store";
-import { renewToken, signUp, singIn } from "../api";
+import {
+  onChecking,
+  onClearAuthMessages,
+  onLogin,
+  onLogout,
+  onLogoutReviews,
+  onSetAuthErrors,
+  onSetLoadingProfileImage,
+  onUpdateProfileImage,
+  onUpdateUser,
+} from "../store";
+import { fileUpload, renewToken, signUp, singIn, updateUser } from "../api";
 
 export const useAuthStore = () => {
-  const { user, currentStatus, message, errors } = useSelector(
-    (state) => state.auth
-  );
+  const { user, isLoadingPicture, currentStatus, message, errors } =
+    useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
+  // Logout
   const startLogout = () => {
     const token = localStorage.getItem("token");
     if (!token) return dispatch(onLogout(message));
 
     // If token exists...
     localStorage.removeItem("token");
-    
+
     // Clean States...
     // Reviews
     dispatch(onLogoutReviews());
@@ -37,6 +47,9 @@ export const useAuthStore = () => {
         },
       } = error;
       dispatch(onSetAuthErrors({ message, errors }));
+      setTimeout(() => {
+        dispatch(onClearAuthMessages());
+      }, 1000);
       throw new Error(error);
     }
   };
@@ -55,6 +68,9 @@ export const useAuthStore = () => {
         },
       } = error;
       dispatch(onSetAuthErrors({ message, errors }));
+      setTimeout(() => {
+        dispatch(onClearAuthMessages());
+      }, 1000);
       throw new Error(error);
     }
   };
@@ -77,17 +93,64 @@ export const useAuthStore = () => {
     }
   };
 
+  // Update Profile Url User
+  const startUploadingProfilePicture = async (file) => {
+    dispatch(onSetLoadingProfileImage(true));
+    try {
+      const { profileUrl } = await fileUpload(file);
+      dispatch(onUpdateProfileImage(profileUrl));
+    } catch (error) {
+      dispatch(onSetLoadingProfileImage(false));
+      const {
+        response: {
+          data: { message, errors },
+        },
+      } = error;
+      dispatch(onSetAuthErrors({ message, errors }));
+      setTimeout(() => {
+        dispatch(onClearAuthMessages());
+      }, 5000);
+      throw new Error(error);
+    }
+  };
+
+  // Update Profile Data
+  const startUpdateAuthProfile = async ({ fullName, email }) => {
+    try {
+      const { token, ...profile } = await updateUser(fullName, email);
+
+      // if token, user updated email
+      if (token) localStorage.setItem("token", token);
+
+      dispatch(onUpdateUser(profile));
+    } catch (error) {
+      const {
+        response: {
+          data: { message, errors },
+        },
+      } = error;
+      dispatch(onSetAuthErrors({ message, errors }));
+      setTimeout(() => {
+        dispatch(onClearAuthMessages());
+      }, 3000);
+      throw new Error(error);
+    }
+  };
+
   return {
     // props
     user,
     currentStatus,
     message,
     errors,
+    isLoadingPicture,
 
     // methods
     startCheckingToken,
     startLogin,
     startLogout,
     startRegister,
+    startUploadingProfilePicture,
+    startUpdateAuthProfile,
   };
 };

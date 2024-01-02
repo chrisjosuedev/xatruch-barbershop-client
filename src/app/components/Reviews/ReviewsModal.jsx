@@ -91,7 +91,7 @@ export const ReviewsModal = () => {
                 type="text"
                 className={`form-control ${errors.title ? 'is-invalid' : ''}`}
                 id="title"
-                placeholder="John Doe"
+                placeholder="Experiencia en Servicio..."
                 {...register("title", titleValidations)}
                 autoFocus
               />
