@@ -17,8 +17,8 @@ export const PasswordUpdateView = () => {
 
   const [passwordErrors, setpasswordErrors] = useState([]);
 
-  const { register, setError, handleSubmit, reset, formState: { errors } } 
-  = useForm({ defaultValues: initialForm });
+  const { register, setError, handleSubmit, reset, formState: { errors } }
+    = useForm({ defaultValues: initialForm });
 
   const onSubmit = async (data) => {
     if (data.newPassword !== data.confirmPassword) {
