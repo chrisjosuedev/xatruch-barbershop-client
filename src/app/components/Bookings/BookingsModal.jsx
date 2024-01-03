@@ -68,7 +68,7 @@ export const BookingsModal = () => {
 
           <div className="row">
             <div className="col-md-12">
-              <table className="table table-striped w-100">
+              <table className="table table-bordered w-100">
                 <thead>
                   <tr>
                     <th scope="col">Servicio</th>
