@@ -62,7 +62,7 @@ export const AuthForm = () => {
             <input
               type="password"
               className={`form-control ${errors.password ? 'is-invalid' : ''}`}
-              {...register("password", passwordValidations)}
+              {...register("password", passwordValidations())}
               placeholder="Password"
             />
             <small className="invalid-feedback text-left">
