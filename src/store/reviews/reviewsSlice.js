@@ -1,7 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 export const reviewsSlice = createSlice({
-  name: "review",
+  name: 'review',
   initialState: {
     userReviews: [],
     reviews: [],
@@ -30,9 +30,7 @@ export const reviewsSlice = createSlice({
     },
     onLoadUserReviews: (state, { payload }) => {
       payload.forEach((review) => {
-        const exists = state.userReviews.some(
-          (reviewInStore) => reviewInStore.id === review.id
-        );
+        const exists = state.userReviews.some((reviewInStore) => reviewInStore.id === review.id);
         if (!exists) {
           const { user, ...rest } = review;
           state.userReviews.push(rest);
@@ -50,9 +48,7 @@ export const reviewsSlice = createSlice({
       state.activeReview = payload;
     },
     onFindUserReview: (state, { payload }) => {
-      state.activeReview = state.userReviews.find(
-        (review) => review.id === payload.id
-      );
+      state.activeReview = state.userReviews.find((review) => review.id === payload.id);
     },
     onLoadReviews: (state, { payload }) => {},
     onApproveReviews: (state, { payload }) => {},

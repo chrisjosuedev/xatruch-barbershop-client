@@ -5,6 +5,7 @@ import {
   onLogin,
   onLogout,
   onLogoutReviews,
+  onLogoutUserBookings,
   onSetAuthErrors,
   onSetLoadingProfileImage,
   onUpdateProfileImage,
@@ -28,6 +29,8 @@ export const useAuthStore = () => {
     // Clean States...
     // Reviews
     dispatch(onLogoutReviews());
+    // Bookings
+    dispatch(onLogoutUserBookings());
 
     // Logout the App
     dispatch(onLogout());

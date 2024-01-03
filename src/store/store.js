@@ -1,12 +1,13 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore } from '@reduxjs/toolkit';
 
-import { authSlice, serviceSlice, uiSlice, reviewsSlice } from "./";
+import { authSlice, serviceSlice, uiSlice, reviewsSlice, bookingsSlice } from './';
 
 export const store = configureStore({
   reducer: {
-    ui: uiSlice.reducer,
     auth: authSlice.reducer,
+    booking: bookingsSlice.reducer,
     service: serviceSlice.reducer,
     review: reviewsSlice.reducer,
+    ui: uiSlice.reducer,
   },
 });
