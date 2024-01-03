@@ -24,7 +24,7 @@ export const Actions = ({ values: { id, isApproved } }) => {
 
   return (
     <>
-      <button onClick={() => onUpdate(id)} className="btn btn-info mr-2 mt-2">
+      <button onClick={() => onUpdate(id)} className="btn btn-dark mr-2 mt-2">
         <FontAwesomeIcon icon={faEdit} />
       </button>
       {

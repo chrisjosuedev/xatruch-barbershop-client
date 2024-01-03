@@ -5,18 +5,28 @@ export const bookingsSlice = createSlice({
   initialState: {
     userBookings: [],
     userbookingDetail: [],
+    activeBooking: null,
     bookings: [],
     bookingDetail: [],
-    activeBooking: null,
     isLoadingBookings: true,
   },
   reducers: {
     onLoadingUserBookings: (state, { payload }) => {
       payload.forEach((booking) => {
-        const exists = state.userBookings.some((bookingInStore) => bookingInStore.id === booking.id);
+        const exists = state.userBookings.some(
+          (bookingInStore) => bookingInStore.id === booking.id
+        );
         if (!exists) state.userBookings.push(booking);
       });
       state.isLoadingBookings = false;
+    },
+    onSetUserBookingDetail: (state, { payload }) => {
+      state.userbookingDetail = payload;
+    },
+    onSetActiveUserBooking: (state, { payload }) => {
+      state.activeBooking = state.userBookings.find(
+        (booking) => booking.id === payload
+      );
     },
     onLogoutUserBookings: (state) => {
       state.userBookings = [];
@@ -29,4 +39,9 @@ export const bookingsSlice = createSlice({
   },
 });
 
-export const { onLoadingUserBookings, onLogoutUserBookings } = bookingsSlice.actions;
+export const {
+  onLoadingUserBookings,
+  onLogoutUserBookings,
+  onSetUserBookingDetail,
+  onSetActiveUserBooking,
+} = bookingsSlice.actions;

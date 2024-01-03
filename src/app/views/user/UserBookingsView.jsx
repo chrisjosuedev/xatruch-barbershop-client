@@ -2,6 +2,7 @@ import { useEffect, useMemo } from "react";
 import { useBookingStore } from "../../../hooks/useBookingStore"
 import { Message, SpinnerLoader } from "../../components";
 import { BookingsTable } from "../../components/Bookings/BookingsTable";
+import { BookingsModal } from "../../components/Bookings";
 
 export const UserBookingsView = () => {
   const { startLoadingUserBookings, isLoadingBookings, userBookings } = useBookingStore();
@@ -27,6 +28,7 @@ export const UserBookingsView = () => {
       <div className="col-md-12">
         {(isLoadingBookings) ? <SpinnerLoader /> : renderUserBookings}
       </div>
+      <BookingsModal />
     </div>
   )
 }

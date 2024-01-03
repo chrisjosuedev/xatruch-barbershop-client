@@ -1,9 +1,16 @@
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useUiStore } from "../../../hooks/useUiStore";
+import { useBookingStore } from "../../../hooks/useBookingStore";
 
 export const Actions = ({ values }) => {
+
+  const { startFindUserBookingDetail } = useBookingStore();
+  const { startOpenModal  } = useUiStore();
+
   const onBookingDetail = (values) => {
-    console.log(values);
+    startFindUserBookingDetail(values);
+    startOpenModal();
   }
 
   return (
