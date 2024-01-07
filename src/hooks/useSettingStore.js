@@ -1,5 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { createSetting, getAllSettings, updateSetting } from '../api/fetch';
+import {
+  activateSetting,
+  createSetting,
+  deleteSetting,
+  getAllSettings,
+  updateSetting,
+} from '../api/fetch';
 import {
   onAddNewSetting,
   onFindSetting,
@@ -7,15 +13,18 @@ import {
   onSetActiveSetting,
 } from '../store';
 import {
+  onClearErrors,
   onClearMessage,
+  onDeleteSetting,
+  onSetErrors,
   onSetMessage,
+  onSetSettingStatus,
   onUpdateSetting,
 } from '../store/settings/settingSlice';
 
 export const useSettingStore = () => {
-  const { settings, message, activeSetting, isLoadingSetting } = useSelector(
-    (state) => state.setting
-  );
+  const { settings, message, activeSetting, settingErrors, isLoadingSetting } =
+    useSelector((state) => state.setting);
 
   const dispatch = useDispatch();
 
@@ -33,6 +42,15 @@ export const useSettingStore = () => {
   const startLoadingSettings = async () => {
     const settings = await getAllSettings();
     dispatch(onLoadSettings(settings));
+  };
+
+  // Set Setting Status
+  const startSetSettingStatus = async (id) => {
+    const { setting, message } = await activateSetting(id);
+    dispatch(onSetSettingStatus({ setting, message }));
+    setTimeout(() => {
+      dispatch(onClearMessage());
+    }, 3000);
   };
 
   // Saving Setting
@@ -54,16 +72,40 @@ export const useSettingStore = () => {
     }, 3000);
   };
 
+  // Star Deleting Setting
+  const startDeleteSetting = async (id) => {
+    try {
+      const message = await deleteSetting(id);
+      dispatch(onDeleteSetting(message));
+      setTimeout(() => {
+        dispatch(onClearMessage());
+      }, 3000);
+    } catch (error) {
+      const {
+        response: {
+          data: { errors },
+        },
+      } = error;
+      dispatch(onSetErrors(errors));
+      setTimeout(() => {
+        dispatch(onClearErrors());
+      }, 4000);
+    }
+  };
+
   return {
     // props
     settings,
     activeSetting,
     isLoadingSetting,
     message,
+    settingErrors,
     // methods
     startLoadingSettings,
     startSavingSetting,
     startSetActiveSetting,
     startFindSetting,
+    startDeleteSetting,
+    startSetSettingStatus
   };
 };

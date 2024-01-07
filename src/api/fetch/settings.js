@@ -19,6 +19,17 @@ export const createSetting = async (setting) => {
   };
 };
 
+// POST - Activate/Desactivate Setting
+export const activateSetting = async (id) => {
+  const {
+    data: { data, message },
+  } = await xatruchBarberApi.post(`/settings/active/${id}`);
+  return {
+    setting: data,
+    message,
+  };
+};
+
 // PUT
 export const updateSetting = async ({
   startDailyAvailability,
@@ -35,4 +46,12 @@ export const updateSetting = async ({
     setting: data,
     message,
   };
+};
+
+// DELETE
+export const deleteSetting = async (id) => {
+  const {
+    data: { message },
+  } = await xatruchBarberApi.delete(`/settings/${id}`);
+  return message;
 };

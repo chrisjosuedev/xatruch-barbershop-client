@@ -2,9 +2,11 @@ import { useEffect, useMemo } from "react";
 
 import { useSettingStore } from "../../../hooks"
 import { AddSettingButton, Message, SettingsModal, SettingsTable, SpinnerLoader } from "../../components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 
 export const SettingsView = () => {
-  const { isLoadingSetting, settings, startLoadingSettings } = useSettingStore();
+  const { isLoadingSetting, settings, settingErrors, startLoadingSettings } = useSettingStore();
 
   useEffect(() => {
     startLoadingSettings();
@@ -24,6 +26,22 @@ export const SettingsView = () => {
       </div>
       <div className="col-md-12 mb-2">
         <AddSettingButton />
+      </div>
+      <div className="col-md-12">
+        {
+          (settingErrors.length > 0) && (
+            <div className="alert alert-danger">
+              <span><FontAwesomeIcon icon={faCircleExclamation} /> <b> Error: </b> </span>
+              <ul>
+                {
+                  settingErrors.map((err, i) => (
+                    <li key={i}>{err.message}</li>
+                  ))
+                }
+              </ul>
+            </div>
+          )
+        }
       </div>
       <hr />
       <div className="col-md-12">

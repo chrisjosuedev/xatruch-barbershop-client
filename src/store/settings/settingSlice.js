@@ -7,6 +7,7 @@ export const settingSlice = createSlice({
     activeSetting: null,
     isLoadingSetting: true,
     message: undefined,
+    settingErrors: [],
   },
   reducers: {
     onAddNewSetting: (state, { payload }) => {
@@ -23,6 +24,20 @@ export const settingSlice = createSlice({
     onFindSetting: (state, { payload }) => {
       state.activeSetting = state.settings.find((setting) => setting.id === payload.id);
     },
+    onDeleteSetting: (state, { payload }) => {
+      state.settings = state.settings.filter((setting) => {
+        if (setting.id !== state.activeSetting.id) return setting;
+      });
+      state.message = payload;
+    },
+    onSetSettingStatus: (state, { payload }) => {
+      state.settings = state.settings.map((setting) => {
+        if (setting.id === payload.setting.id) return payload.setting;
+        setting.isActive = false;
+        return setting;
+      });
+      state.message = payload.message;
+    },
     onSetActiveSetting: (state, { payload }) => {
       state.activeSetting = payload;
     },
@@ -38,18 +53,29 @@ export const settingSlice = createSlice({
     onSetMessage: (state, { payload }) => {
       state.message = payload;
     },
+    onSetErrors: (state, { payload }) => {
+      state.settingErrors = payload;
+    },
     onClearMessage: (state) => {
       state.message = undefined;
+      state.settingErrors = [];
+    },
+    onClearErrors: (state) => {
+      state.settingErrors = [];
     },
   },
 });
 
 export const {
   onAddNewSetting,
+  onClearErrors,
   onClearMessage,
+  onDeleteSetting,
   onFindSetting,
   onLoadSettings,
   onSetActiveSetting,
+  onSetErrors,
   onSetMessage,
+  onSetSettingStatus,
   onUpdateSetting,
 } = settingSlice.actions;

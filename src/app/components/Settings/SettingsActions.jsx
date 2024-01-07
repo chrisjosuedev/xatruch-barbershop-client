@@ -3,10 +3,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRotateLeft, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useSettingStore } from "../../../hooks/useSettingStore";
 import { useUiStore } from "../../../hooks/useUiStore";
+import { alertInfo } from "../../../helpers";
 
 export const Actions = ({ values }) => {
 
-  const { startFindSetting } = useSettingStore();
+  const { startFindSetting, startDeleteSetting, startSetSettingStatus } = useSettingStore();
   const { startOpenModal } = useUiStore();
   
   const onUpdate = (id) => {
@@ -15,11 +16,15 @@ export const Actions = ({ values }) => {
   }
 
   const onDelete = (id) => {
-    console.log("Removing..." + id)
+    startFindSetting(id);
+    const logoutInfo = alertInfo("¿Seguro que desea eliminar la configuración de horario?", "info", "Si");
+    Swal.fire(logoutInfo).then((result) => {
+      if (result.isConfirmed) startDeleteSetting(id);
+    });
   }
 
   const onActivate = (id) => {
-    console.log("Activating..." + id)
+    startSetSettingStatus(id);
   }
 
   return (
