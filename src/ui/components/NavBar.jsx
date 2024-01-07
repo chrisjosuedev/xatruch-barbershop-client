@@ -8,7 +8,7 @@ import { alertInfo } from "../../helpers";
 
 export const NavBar = ({ isLanding }) => {
 
-  const { currentStatus, startLogout } = useAuthStore();
+  const { user: { role }, currentStatus, startLogout } = useAuthStore();
   const navigate = useNavigate();
 
   const onLogout = () => {
@@ -78,6 +78,14 @@ export const NavBar = ({ isLanding }) => {
                     Cuenta
                   </a>
                   <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    {
+                      (role === "ADMIN") &&
+                      <Link
+                        className="dropdown-item"
+                        to="/settings">
+                        Panel Admin
+                      </Link>
+                    }
                     <Link
                       className="dropdown-item"
                       to="/account">
@@ -85,7 +93,7 @@ export const NavBar = ({ isLanding }) => {
                     </Link>
                     <Link
                       className="dropdown-item"
-                      style={{cursor: "pointer"}}
+                      style={{ cursor: "pointer" }}
                       onClick={onLogout}>
                       Cerrar Sesión
                     </Link>

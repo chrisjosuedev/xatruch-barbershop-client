@@ -7,3 +7,4 @@ export * from "./Table";
 
 export * from "./Landing";
 export * from "./Services"
+export * from "./Settings";

@@ -1,12 +1,13 @@
+import { useEffect } from "react";
 import { Navigate, Route, Routes } from "react-router-dom"
 
 import { AuthRoutes } from "../auth/routes";
 import { AdminRoutes, CheckoutRoutes, UserRoutes } from "../app/routes";
 
-import { LandingPage, ServicesPage } from "../app/pages";
+import { ServicesPage } from "../app/pages/ServicesPage";
+import { LandingPage } from "../app/pages";
 import { useAuthStore } from "../hooks";
 import { authStatus } from "../data/data";
-import { useEffect } from "react";
 import { AuthLoader } from "../ui";
 
 export const AppRouter = () => {

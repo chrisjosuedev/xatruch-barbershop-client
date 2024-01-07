@@ -7,6 +7,8 @@ import {
     getSortedRowModel,
     getFilteredRowModel
 } from "@tanstack/react-table";
+import { faCaretDown, faCaretUp, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const Table = ({ data, columns, filterBy }) => {
 
@@ -38,7 +40,7 @@ export const Table = ({ data, columns, filterBy }) => {
             <div className="row justify-content-end mb-4">
                 <div className="col-4">
                     <label htmlFor="search" className="form-label">
-                        <i className="fas fa-search"></i>&nbsp;Filtrar:
+                        <FontAwesomeIcon icon={faSearch} />&nbsp;Filtrar:
                     </label>
                     <input
                         id="search"
@@ -64,8 +66,8 @@ export const Table = ({ data, columns, filterBy }) => {
                                             <b> {header.column.columnDef.header} </b>
                                             {
                                                 {
-                                                    "asc": (<i className="fas fa-sort-up"></i>),
-                                                    "desc": (<i className="fas fa-sort-down"></i>)
+                                                    "asc": (<FontAwesomeIcon icon={faCaretUp} />),
+                                                    "desc": (<FontAwesomeIcon icon={faCaretDown} />)
                                                 }[header.column.getIsSorted() ?? null]
                                             }
                                         </th>

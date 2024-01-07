@@ -1,7 +1,8 @@
 export * from "./auth/authSlice";
-export * from "./service/serviceSlice";
-export * from "./reviews/reviewsSlice";
-export * from "./ui/uiSlice";
 export * from "./bookings/bookingsSlice";
+export * from "./reviews/reviewsSlice";
+export * from "./service/serviceSlice";
+export * from "./settings/settingSlice";
+export * from "./ui/uiSlice";
 
 export * from "./store";

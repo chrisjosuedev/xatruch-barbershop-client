@@ -656,6 +656,17 @@ footer {
   font-size: 0.9rem;
 }
 
+.react-datepicker__triangle {
+  left: -50px !important;
+}
+
+.customDatePickerWidth, 
+.customDatePickerWidth > div.react-datepicker-wrapper, 
+.customDatePickerWidth > div > div.react-datepicker__input-container
+.customDatePickerWidth > div > div.react-datepicker__input-container input {
+   width: 100%;
+}
+
 @media (max-width: 768px) {
   .slider__body {
     grid-template-columns: 1fr;
