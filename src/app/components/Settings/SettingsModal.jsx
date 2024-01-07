@@ -6,7 +6,7 @@ import DatePicker, { registerLocale } from "react-datepicker";
 import { es } from "date-fns/locale";
 
 import { Controller, useForm } from "react-hook-form";
-import { differenceInSeconds, format } from "date-fns";
+import { differenceInSeconds } from "date-fns";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark, faFloppyDisk, faWrench } from "@fortawesome/free-solid-svg-icons";
@@ -14,7 +14,7 @@ import { faCircleXmark, faFloppyDisk, faWrench } from "@fortawesome/free-solid-s
 import { useUiStore } from "../../../hooks/useUiStore";
 import { customStyles } from "../../../helpers/ModalCustomStyles";
 
-import { alertSuccess, roundHour } from "../../../helpers";
+import { alertSuccess, formatStringToDate, formatTo24hrs } from "../../../helpers";
 
 import 'react-datepicker/dist/react-datepicker.min.css';
 import { useSettingStore } from "../../../hooks/useSettingStore";
@@ -26,15 +26,28 @@ registerLocale('es', es);
 
 export const SettingsModal = () => {
 
-  const { control, handleSubmit, reset, clearErrors, setError, formState: { errors } } = useForm();
+  const { control, handleSubmit,
+    reset, clearErrors, setError, formState: { errors } } = useForm();
   const { isModalOpen, startCloseModal } = useUiStore();
-  const { startSavingSetting, activeSetting } = useSettingStore();
+  const { startSavingSetting, message, activeSetting } = useSettingStore();
+
 
   useEffect(() => {
     if (activeSetting !== null) {
-      reset(activeSetting);
+      reset({
+        ...activeSetting,
+        startDailyAvailability: formatStringToDate(activeSetting.startDailyAvailability),
+        endDailyAvailability: formatStringToDate(activeSetting.endDailyAvailability),
+      });
     }
   }, [activeSetting]);
+
+  useEffect(() => {
+    if (message !== undefined) {
+      const infoMessage = alertSuccess(message, 'success');
+      Swal.fire(infoMessage);
+    }
+  }, [message]);
 
   const closeModalAndClean = () => {
     reset();
@@ -42,7 +55,7 @@ export const SettingsModal = () => {
     startCloseModal();
   }
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const { startDailyAvailability, endDailyAvailability, ...rest } = data;
     const difference = differenceInSeconds(endDailyAvailability, startDailyAvailability);
 
@@ -50,20 +63,24 @@ export const SettingsModal = () => {
       setError("endDailyAvailability", {
         type: "custom",
       });
-      const infoMessage = alertSuccess("Fecha de Fin no puede ser menor que la de Inicio.", "error");
+      const infoMessage = alertSuccess("Fecha de Fin no puede ser menor o igual que la de Inicio.", "error");
       Swal.fire(infoMessage);
       return;
     }
 
-    startSavingSetting({
-      ...rest,
-      startDailyAvailability: format(startDailyAvailability, "HH:mm:ss"),
-      endDailyAvailability: format(endDailyAvailability, "HH:mm:ss")
-    }).then(() => {
-      const infoMessage = alertSuccess("Configuración creada.", "success");
-      Swal.fire(infoMessage);
-    })
-    closeModalAndClean();
+    try {
+      // Format to 24hrs
+      await startSavingSetting({
+        ...rest,
+        startDailyAvailability: formatTo24hrs(startDailyAvailability),
+        endDailyAvailability: formatTo24hrs(endDailyAvailability)
+      });
+      closeModalAndClean();
+    } catch (error) {
+      const { response: { data: { message } } } = error;
+      const errorInfo = alertSuccess(message, "error");
+      Swal.fire(errorInfo);
+    }
   }
 
   return (
@@ -98,10 +115,8 @@ export const SettingsModal = () => {
                   control={control}
                   name="startDailyAvailability"
                   rules={{ required: true }}
-                  render={({ field: { ref, ...field } }) => (
+                  render={({ field }) => (
                     <DatePicker
-                      {...field}
-                      inputRef={ref}
                       className={`form-control ${errors.startDailyAvailability ? 'is-invalid' : ''}`}
                       selected={field.value}
                       onChange={date => field.onChange(date)}
@@ -125,10 +140,8 @@ export const SettingsModal = () => {
                   control={control}
                   name="endDailyAvailability"
                   rules={{ required: true }}
-                  render={({ field: { ref, ...field } }) => (
+                  render={({ field }) => (
                     <DatePicker
-                      {...field}
-                      inputRef={ref}
                       className={`form-control ${errors.endDailyAvailability ? 'is-invalid' : ''}`}
                       selected={field.value}
                       onChange={date => field.onChange(date)}

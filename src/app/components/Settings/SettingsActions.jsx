@@ -1,10 +1,17 @@
 import Swal from "sweetalert2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRotateLeft, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { useSettingStore } from "../../../hooks/useSettingStore";
+import { useUiStore } from "../../../hooks/useUiStore";
 
 export const Actions = ({ values }) => {
+
+  const { startFindSetting } = useSettingStore();
+  const { startOpenModal } = useUiStore();
+  
   const onUpdate = (id) => {
-    console.log("Updating..." + id)
+    startFindSetting(id);
+    startOpenModal();
   }
 
   const onDelete = (id) => {

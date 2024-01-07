@@ -11,9 +11,28 @@ export const getAllSettings = async () => {
 // POST
 export const createSetting = async (setting) => {
   const {
-    data: { data },
+    data: { data, message },
   } = await xatruchBarberApi.post('/settings', setting);
   return {
     setting: data,
+    message,
+  };
+};
+
+// PUT
+export const updateSetting = async ({
+  startDailyAvailability,
+  endDailyAvailability,
+  ...rest
+}) => {
+  const {
+    data: { data, message },
+  } = await xatruchBarberApi.put(`/settings/${rest.id}`, {
+    startDailyAvailability,
+    endDailyAvailability,
+  });
+  return {
+    setting: data,
+    message,
   };
 };

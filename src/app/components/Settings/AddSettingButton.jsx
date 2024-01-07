@@ -9,10 +9,7 @@ export const AddSettingButton = () => {
   const { startSetActiveSetting } = useSettingStore();
 
   const onNewSetting = () => {
-    startSetActiveSetting({
-      startDailyAvailability: "",
-      endDailyAvailability: ""
-    })
+    startSetActiveSetting({});
     startOpenModal();
   }
 

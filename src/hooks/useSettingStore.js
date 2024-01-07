@@ -1,13 +1,28 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { createSetting, getAllSettings } from '../api/fetch';
-import { onAddNewSetting, onLoadSettings, onSetActiveSetting } from '../store';
+import { createSetting, getAllSettings, updateSetting } from '../api/fetch';
+import {
+  onAddNewSetting,
+  onFindSetting,
+  onLoadSettings,
+  onSetActiveSetting,
+} from '../store';
+import {
+  onClearMessage,
+  onSetMessage,
+  onUpdateSetting,
+} from '../store/settings/settingSlice';
 
 export const useSettingStore = () => {
-  const { settings, activeSetting, isLoadingSetting } = useSelector(
+  const { settings, message, activeSetting, isLoadingSetting } = useSelector(
     (state) => state.setting
   );
 
   const dispatch = useDispatch();
+
+  // Find Setting
+  const startFindSetting = (id) => {
+    dispatch(onFindSetting({ id }));
+  };
 
   // Set Active Setting
   const startSetActiveSetting = (setting) => {
@@ -22,17 +37,21 @@ export const useSettingStore = () => {
 
   // Saving Setting
   const startSavingSetting = async (setting) => {
-    try {
-      if (setting.id) {
-        // update
-        return;
-      }
-      // Save Setting
-      const { setting: schedule } = await createSetting(setting);
-      dispatch(onAddNewSetting(schedule));
-    } catch (error) {
-      throw new Error(error);
+    if (setting.id) {
+      // update
+      const { setting: schedule, message } = await updateSetting(setting);
+      dispatch(onUpdateSetting({ schedule, message }));
+      setTimeout(() => {
+        dispatch(onClearMessage());
+      }, 3000);
+      return;
     }
+    // Save Setting
+    const { setting: schedule, message } = await createSetting(setting);
+    dispatch(onAddNewSetting({ schedule, message }));
+    setTimeout(() => {
+      dispatch(onClearMessage());
+    }, 3000);
   };
 
   return {
@@ -40,9 +59,11 @@ export const useSettingStore = () => {
     settings,
     activeSetting,
     isLoadingSetting,
+    message,
     // methods
     startLoadingSettings,
     startSavingSetting,
     startSetActiveSetting,
+    startFindSetting,
   };
 };
