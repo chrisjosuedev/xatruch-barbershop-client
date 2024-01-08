@@ -12,7 +12,7 @@ export const SettingsView = () => {
     startLoadingSettings();
   }, []);
 
-  const renderSettingsReviews = useMemo(() => {
+  const renderSettings = useMemo(() => {
     if (settings.length === 0)
       return (<Message message={"No parece haber nada por aquí... 😔"} type="dark" />);
     return (<SettingsTable data={settings} />)
@@ -45,7 +45,7 @@ export const SettingsView = () => {
       </div>
       <hr />
       <div className="col-md-12">
-        {isLoadingSetting ? <SpinnerLoader /> : renderSettingsReviews}
+        {isLoadingSetting ? <SpinnerLoader /> : renderSettings}
       </div>
       <SettingsModal />
     </div>
