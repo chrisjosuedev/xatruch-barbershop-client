@@ -8,16 +8,18 @@ export const useServiceStore = () => {
 
   const { services, isLoadingServices } = useSelector((state) => state.service);
 
+  // Set it Loading
   const startSetIsLoading = () => {
     dispatch(dispatch(onSetIsLoading()));
   }
 
-
+  // Start Loading Services
   const startLoadingServices = async () => {
     const { data: services } = await getAllServices();
     dispatch(onLoadServices(services));
   };
 
+  // Filtering Services
   const startFilteringServices = (serviceName = "") => {
     dispatch(onFilterServices(serviceName));
 
@@ -25,6 +27,7 @@ export const useServiceStore = () => {
     dispatch(dispatch(onSetIsLoading()));
   };
 
+  // Restore Services
   const startFilteringReset = () => {
     dispatch(onResetFilter());
 
