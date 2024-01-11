@@ -7,17 +7,17 @@ import { ServicesTable } from "../../components/Services/ServicesTable";
 
 export const ServicesManagementView = () => {
 
-  const { isLoadingServices, services, startLoadingServices } = useServiceStore()
+  const { isLoadingServices, allServices, startLoadingServices } = useServiceStore()
 
   useEffect(() => {
     startLoadingServices()
   }, [])
 
   const renderServices = useMemo(() => {
-    if (services.length === 0)
+    if (allServices.length === 0)
       return (<Message message={"No parece haber nada por aquí... 😔"} type="dark" />);
-    return (<ServicesTable data={services} />)
-  }, [services]);
+    return (<ServicesTable data={allServices} />)
+  }, [allServices]);
 
 
   return (

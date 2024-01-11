@@ -1,51 +1,71 @@
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import Modal from "react-modal"
-import Swal from "sweetalert2";
+import { useEffect } from 'react'
+import { useForm } from 'react-hook-form'
+import Modal from 'react-modal'
+import Swal from 'sweetalert2'
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleXmark, faFloppyDisk, faTag } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCircleXmark, faFloppyDisk, faTag } from '@fortawesome/free-solid-svg-icons'
 
-import { useUiStore } from "../../../hooks/useUiStore";
-import { customStyles } from "../../../helpers/ModalCustomStyles";
+import { useUiStore } from '../../../hooks/useUiStore'
+import { customStyles } from '../../../helpers/ModalCustomStyles'
 
-import { alertSuccess, priceValidations, serviceNameValidations } from "../../../helpers";
+import { alertSuccess, priceValidations, serviceNameValidations } from '../../../helpers'
+import { useServiceStore } from '../../../hooks/useServiceStore'
 
-Modal.setAppElement('#root');
+Modal.setAppElement('#root')
 
 const initForm = {
-  price: ""
+  serviceName: '',
+  price: 0,
 }
 
 export const ServicesModal = () => {
-
-  const { register,
+  const {
+    register,
     handleSubmit,
-    clearErrors, reset, formState: { errors } } = useForm({ defaultValues: initForm });
+    clearErrors,
+    setError,
+    reset,
+    formState: { errors },
+  } = useForm({ defaultValues: initForm })
 
-  const { isModalOpen, startCloseModal } = useUiStore();
+  const { isModalOpen, startCloseModal } = useUiStore()
+  const { message, activeService, serviceErrors, startSavingService } = useServiceStore()
 
   const closeModalAndClean = () => {
-    reset();
-    clearErrors();
-    startCloseModal();
+    reset()
+    clearErrors()
+    startCloseModal()
   }
 
-  // useEffect(() => {
-  //   if (message !== undefined) {
-  //     const successInfo = alertSuccess(message, "success");
-  //     Swal.fire(successInfo)
-  //   }
-  // }, [message]);
+  useEffect(() => {
+    if (activeService !== null) reset(activeService)
+  }, [activeService])
 
-  // useEffect(() => {
-  //   if (activeBarber !== null) reset(activeBarber);
-  // }, [activeBarber]);
+  useEffect(() => {
+    if (message !== undefined) {
+      const successInfo = alertSuccess(message, 'success')
+      Swal.fire(successInfo)
+    }
+  }, [message])
+
+  useEffect(() => {
+    if (serviceErrors && serviceErrors.length > 0) {
+      for (const error of serviceErrors) {
+        setError(error.field, {
+          type: 'server',
+          message: error.message,
+        })
+      }
+    }
+  }, [serviceErrors])
 
   const onSubmit = async (data) => {
-    console.log(data)
-    // reset();
-    // startCloseModal();
+    startSavingService(data)
+      .then(() => {
+        reset()
+        startCloseModal()
+      })
   }
 
   return (
@@ -57,7 +77,6 @@ export const ServicesModal = () => {
       style={customStyles}
     >
       <div>
-
         <div className="modal-header">
           <h5 className="modal-title">
             <FontAwesomeIcon icon={faTag} />
@@ -67,7 +86,8 @@ export const ServicesModal = () => {
             type="button"
             onClick={closeModalAndClean}
             className="close"
-            aria-label="Close">
+            aria-label="Close"
+          >
             <FontAwesomeIcon icon={faCircleXmark} />
           </button>
         </div>
@@ -75,13 +95,15 @@ export const ServicesModal = () => {
         <div className="modal-body">
           <form onSubmit={handleSubmit(onSubmit)} noValidate>
             <div className="mb-4">
-              <label htmlFor="serviceName" className="form-label">Nombre del Servicio </label>
+              <label htmlFor="serviceName" className="form-label">
+                Nombre del Servicio{' '}
+              </label>
               <input
                 type="text"
                 className={`form-control ${errors.serviceName ? 'is-invalid' : ''}`}
                 id="serviceName"
                 placeholder="Corte de cabello..."
-                {...register("serviceName", serviceNameValidations)}
+                {...register('serviceName', serviceNameValidations)}
                 autoFocus
               />
               <small className="invalid-feedback text-left">
@@ -89,13 +111,15 @@ export const ServicesModal = () => {
               </small>
             </div>
             <div className="mb-4">
-              <label htmlFor="price" className="form-label">Precio del Servicio </label>
+              <label htmlFor="price" className="form-label">
+                Precio del Servicio{' '}
+              </label>
               <input
-                type="number"
+                type="text"
                 className={`form-control ${errors.price ? 'is-invalid' : ''}`}
                 id="price"
                 placeholder="Corte de cabello..."
-                {...register("price", priceValidations)}
+                {...register('price', priceValidations)}
               />
               <small className="invalid-feedback text-left">
                 {errors.price && errors.price.message}

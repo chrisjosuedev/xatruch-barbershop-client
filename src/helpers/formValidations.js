@@ -86,8 +86,8 @@ export const serviceNameValidations = {
     message: 'Nombre del Servicio debe contener menos de 30 caracteres.',
   },
   pattern: {
-    value: /^[a-zA-Z\s]+$/,
-    message: 'Nombre Completo inválido.',
+    value: /^[ñA-Za-z _]*[ñA-Za-z][ñA-Za-z _]*$/,
+    message: 'Nombre del Servicio inválido.',
   },
 }
 
@@ -102,6 +102,6 @@ export const priceValidations = {
   },
   pattern: {
     value: /^\d+(\.\d{1,2})?$/,
-    message: 'Máximo de 2 cifras decimales permitidas.',
+    message: 'Máximo de 2 cifras decimales permitidas, separados por punto.',
   },
 }

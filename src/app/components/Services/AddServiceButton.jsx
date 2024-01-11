@@ -1,14 +1,19 @@
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useUiStore } from "../../../hooks/useUiStore"
+import { useServiceStore } from "../../../hooks";
 
 
 export const AddServiceButton = () => {
 
   const { startOpenModal } = useUiStore();
+  const { startSetActiveService } = useServiceStore()
 
   const onNewService = () => {
-    // TODO: Start Setting Active
+    startSetActiveService({
+      serviceName: '',
+      price: 0
+    })
     startOpenModal();
   }
 
