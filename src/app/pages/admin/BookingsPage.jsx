@@ -1,5 +1,5 @@
-import { AdminLayout } from "../../layout/AdminLayout"
-import { AppLayout } from "../../layout/AppLayout"
+import { AdminLayout } from "../../layout/AdminLayout";
+import { AppLayout } from "../../layout/AppLayout";
 
 export const BookingsPage = () => {
   return (
@@ -8,5 +8,5 @@ export const BookingsPage = () => {
         <div>BookingsView</div>
       </AdminLayout>
     </AppLayout>
-  )
-}
+  );
+};

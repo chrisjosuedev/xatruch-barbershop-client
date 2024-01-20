@@ -2,30 +2,30 @@ import { useEffect, useMemo, useState } from "react";
 
 import { useForm } from "react-hook-form";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 import { useServiceStore } from "../../hooks";
 import { Message, ServicesGrid, SpinnerLoader } from "../components";
 
 export const ServicesView = () => {
-
   const [message, setMessage] = useState("");
   const [success, setSuccess] = useState(true);
 
-  const { services,
+  const {
+    services,
     isLoadingServices,
     startLoadingServices,
     startFilteringServices,
     startSetIsLoading,
-    startFilteringReset } = useServiceStore();
+    startFilteringReset,
+  } = useServiceStore();
 
-
-  // Control Form 
+  // Control Form
   const { register, handleSubmit, setFocus } = useForm({
     defaultValues: {
-      searchText: ""
-    }
+      searchText: "",
+    },
   });
 
   // Load Initial Services Data
@@ -40,7 +40,7 @@ export const ServicesView = () => {
         setMessage(message + " 👻");
         setSuccess(false);
       }
-    }
+    };
     fetchServices();
     setFocus("searchText");
   }, []);
@@ -51,22 +51,22 @@ export const ServicesView = () => {
     if (searchText.length === 0) return;
 
     startFilteringServices(searchText);
-  }
+  };
 
   // Restore services when Input Change
   const onChangeSearch = (e) => {
     const searchChange = e.target.value;
     if (!!searchChange || searchChange.length === 0) startFilteringReset();
-  }
+  };
 
   // Render Messages or Services
   const renderServices = useMemo(() => {
-    if (!success) return (<Message message={message} type="danger" />);
+    if (!success) return <Message message={message} type="danger" />;
     if (services.length === 0) {
       setMessage("Lo sentimos, no encontramos los servicios 😔");
-      return (<Message message={message} type="dark" />);
+      return <Message message={message} type="dark" />;
     }
-    return (<ServicesGrid services={services} />)
+    return <ServicesGrid services={services} />;
   }, [success, message, services]);
 
   return (
@@ -74,7 +74,10 @@ export const ServicesView = () => {
       <div className="container">
         <div className="row p-4">
           <div className="col-md-5">
-            <h4> <b> Filtrar </b></h4>
+            <h4>
+              {" "}
+              <b> Filtrar </b>
+            </h4>
             <hr />
             <form onSubmit={handleSubmit(onSearchSubmit)}>
               <div className="form-row">
@@ -83,7 +86,7 @@ export const ServicesView = () => {
                     type="text"
                     className="form-control"
                     {...register("searchText", {
-                      onChange: onChangeSearch
+                      onChange: onChangeSearch,
                     })}
                     autoComplete="off"
                     placeholder="Nombre del Servicio..."
@@ -101,12 +104,14 @@ export const ServicesView = () => {
             </form>
           </div>
           <div className="col-md-7">
-            <h4><b>Servicios Disponibles</b></h4>
+            <h4>
+              <b>Servicios Disponibles</b>
+            </h4>
             <hr />
             {isLoadingServices ? <SpinnerLoader /> : renderServices}
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};

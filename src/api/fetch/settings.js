@@ -1,10 +1,10 @@
-import xatruchBarberApi from '../clientApi';
+import xatruchBarberApi from "../clientApi";
 
 // GET
 export const getAllSettings = async () => {
   const {
     data: { data },
-  } = await xatruchBarberApi.get('/settings');
+  } = await xatruchBarberApi.get("/settings");
   return data;
 };
 
@@ -12,7 +12,7 @@ export const getAllSettings = async () => {
 export const createSetting = async (setting) => {
   const {
     data: { data, message },
-  } = await xatruchBarberApi.post('/settings', setting);
+  } = await xatruchBarberApi.post("/settings", setting);
   return {
     setting: data,
     message,

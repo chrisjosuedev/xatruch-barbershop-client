@@ -1,9 +1,9 @@
-import { useEffect, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useEffect, useRef } from "react";
+import { useLocation } from "react-router-dom";
 
 export const ScrollToAnchor = () => {
   const location = useLocation();
-  const lastHash = useRef('');
+  const lastHash = useRef("");
 
   useEffect(() => {
     if (location.hash) {
@@ -14,11 +14,11 @@ export const ScrollToAnchor = () => {
       setTimeout(() => {
         document
           .getElementById(lastHash.current)
-          ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        lastHash.current = '';
+          ?.scrollIntoView({ behavior: "smooth", block: "start" });
+        lastHash.current = "";
       }, 100);
     }
   }, [location]);
 
   return null;
-}
+};

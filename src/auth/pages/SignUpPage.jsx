@@ -7,5 +7,5 @@ export const SignUpPage = () => {
     <AuthLayout>
       <SignUpForm />
     </AuthLayout>
-  )
-}
+  );
+};

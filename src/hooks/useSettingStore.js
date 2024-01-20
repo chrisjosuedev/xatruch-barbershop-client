@@ -1,17 +1,17 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 import {
   activateSetting,
   createSetting,
   deleteSetting,
   getAllSettings,
   updateSetting,
-} from '../api/fetch';
+} from "../api/fetch";
 import {
   onAddNewSetting,
   onFindSetting,
   onLoadSettings,
   onSetActiveSetting,
-} from '../store';
+} from "../store";
 import {
   onClearErrors,
   onClearMessage,
@@ -20,7 +20,7 @@ import {
   onSetMessage,
   onSetSettingStatus,
   onUpdateSetting,
-} from '../store/settings/settingSlice';
+} from "../store/settings/settingSlice";
 
 export const useSettingStore = () => {
   const { settings, message, activeSetting, settingErrors, isLoadingSetting } =
@@ -106,6 +106,6 @@ export const useSettingStore = () => {
     startSetActiveSetting,
     startFindSetting,
     startDeleteSetting,
-    startSetSettingStatus
+    startSetSettingStatus,
   };
 };

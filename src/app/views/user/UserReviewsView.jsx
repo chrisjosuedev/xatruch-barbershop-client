@@ -1,10 +1,15 @@
 import { useEffect, useMemo } from "react";
-import { useReviewStore } from "../../../hooks/useReviewStore"
-import { AddReviewButton, ReviewsModal, ReviewsTable } from "../../components/Reviews"
+import { useReviewStore } from "../../../hooks/useReviewStore";
+import {
+  AddReviewButton,
+  ReviewsModal,
+  ReviewsTable,
+} from "../../components/Reviews";
 import { Message, SpinnerLoader } from "../../components";
 
 export const UserReviewsView = () => {
-  const { userReviews, isLoadingReviews, startLoadingUserReviews } = useReviewStore();
+  const { userReviews, isLoadingReviews, startLoadingUserReviews } =
+    useReviewStore();
 
   useEffect(() => {
     startLoadingUserReviews();
@@ -13,8 +18,10 @@ export const UserReviewsView = () => {
   // Render Messages or User Reviews
   const renderUserReviews = useMemo(() => {
     if (userReviews.length === 0)
-      return (<Message message={"No parece haber nada por aquí... 😔"} type="dark" />);
-    return (<ReviewsTable data={userReviews} />)
+      return (
+        <Message message={"No parece haber nada por aquí... 😔"} type="dark" />
+      );
+    return <ReviewsTable data={userReviews} />;
   }, [userReviews]);
 
   return (
@@ -27,9 +34,9 @@ export const UserReviewsView = () => {
         <AddReviewButton />
       </div>
       <div className="col-md-12">
-        {(isLoadingReviews) ? <SpinnerLoader /> : renderUserReviews}
+        {isLoadingReviews ? <SpinnerLoader /> : renderUserReviews}
       </div>
       <ReviewsModal />
     </div>
-  )
-}
+  );
+};

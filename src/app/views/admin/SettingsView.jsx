@@ -1,12 +1,19 @@
 import { useEffect, useMemo } from "react";
 
-import { useSettingStore } from "../../../hooks"
-import { AddSettingButton, Message, SettingsModal, SettingsTable, SpinnerLoader } from "../../components";
+import { useSettingStore } from "../../../hooks";
+import {
+  AddSettingButton,
+  Message,
+  SettingsModal,
+  SettingsTable,
+  SpinnerLoader,
+} from "../../components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 
 export const SettingsView = () => {
-  const { isLoadingSetting, settings, settingErrors, startLoadingSettings } = useSettingStore();
+  const { isLoadingSetting, settings, settingErrors, startLoadingSettings } =
+    useSettingStore();
 
   useEffect(() => {
     startLoadingSettings();
@@ -14,8 +21,10 @@ export const SettingsView = () => {
 
   const renderSettings = useMemo(() => {
     if (settings.length === 0)
-      return (<Message message={"No parece haber nada por aquí... 😔"} type="dark" />);
-    return (<SettingsTable data={settings} />)
+      return (
+        <Message message={"No parece haber nada por aquí... 😔"} type="dark" />
+      );
+    return <SettingsTable data={settings} />;
   }, [settings]);
 
   return (
@@ -28,20 +37,18 @@ export const SettingsView = () => {
         <AddSettingButton />
       </div>
       <div className="col-md-12">
-        {
-          (settingErrors.length > 0) && (
-            <div className="alert alert-danger">
-              <span><FontAwesomeIcon icon={faCircleExclamation} /> <b> Error: </b> </span>
-              <ul>
-                {
-                  settingErrors.map((err, i) => (
-                    <li key={i}>{err.message}</li>
-                  ))
-                }
-              </ul>
-            </div>
-          )
-        }
+        {settingErrors.length > 0 && (
+          <div className="alert alert-danger">
+            <span>
+              <FontAwesomeIcon icon={faCircleExclamation} /> <b> Error: </b>{" "}
+            </span>
+            <ul>
+              {settingErrors.map((err, i) => (
+                <li key={i}>{err.message}</li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
       <hr />
       <div className="col-md-12">
@@ -49,5 +56,5 @@ export const SettingsView = () => {
       </div>
       <SettingsModal />
     </div>
-  )
-}
+  );
+};

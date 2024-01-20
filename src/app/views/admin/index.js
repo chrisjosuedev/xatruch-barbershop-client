@@ -1,2 +1,2 @@
-export * from './SettingsView'
-export * from './ServicesManagementView'
+export * from "./SettingsView";
+export * from "./ServicesManagementView";

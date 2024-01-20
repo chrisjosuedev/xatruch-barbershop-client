@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom"
+import { Route, Routes } from "react-router-dom";
 
 export const CheckoutRoutes = () => {
   /**
@@ -16,5 +16,5 @@ export const CheckoutRoutes = () => {
       <Route path="/purchase" element={} /> */}
       <Route path="/*" element={<Navigate to={"/pick-a-time"} />} />
     </Routes>
-  )
-}
+  );
+};

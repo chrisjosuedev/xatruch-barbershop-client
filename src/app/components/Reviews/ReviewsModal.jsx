@@ -1,30 +1,40 @@
-import Modal from "react-modal"
+import Modal from "react-modal";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleXmark, faFloppyDisk, faList } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCircleXmark,
+  faFloppyDisk,
+  faList,
+} from "@fortawesome/free-solid-svg-icons";
 
 import Swal from "sweetalert2";
 
 import { useUiStore } from "../../../hooks/useUiStore";
 import { customStyles } from "../../../helpers/ModalCustomStyles";
 import { useForm } from "react-hook-form";
-import { reviewValidations, titleValidations } from "../../../helpers/formValidations";
+import {
+  reviewValidations,
+  titleValidations,
+} from "../../../helpers/formValidations";
 import { useReviewStore } from "../../../hooks/useReviewStore";
 import { alertSuccess } from "../../../helpers";
 import { useEffect } from "react";
 
-Modal.setAppElement('#root');
+Modal.setAppElement("#root");
 
 const initForm = {
   title: "",
-  review: ""
-}
+  review: "",
+};
 
 export const ReviewsModal = () => {
-
-  const { register,
+  const {
+    register,
     handleSubmit,
-    clearErrors, reset, formState: { errors } } = useForm({ defaultValues: initForm });
+    clearErrors,
+    reset,
+    formState: { errors },
+  } = useForm({ defaultValues: initForm });
 
   const { startSavingReview, message, activeReview } = useReviewStore();
   const { isModalOpen, startCloseModal } = useUiStore();
@@ -33,7 +43,7 @@ export const ReviewsModal = () => {
     reset();
     clearErrors();
     startCloseModal();
-  }
+  };
 
   // Message when action Finished
   useEffect(() => {
@@ -53,11 +63,15 @@ export const ReviewsModal = () => {
       reset();
       startCloseModal();
     } catch (error) {
-      const { response: { data: { message } } } = error;
+      const {
+        response: {
+          data: { message },
+        },
+      } = error;
       const errorInfo = alertSuccess(message, "error");
       Swal.fire(errorInfo);
     }
-  }
+  };
 
   return (
     <Modal
@@ -68,7 +82,6 @@ export const ReviewsModal = () => {
       style={customStyles}
     >
       <div>
-
         <div className="modal-header">
           <h5 className="modal-title">
             <FontAwesomeIcon icon={faList} />
@@ -78,7 +91,8 @@ export const ReviewsModal = () => {
             type="button"
             onClick={closeModalAndClean}
             className="close"
-            aria-label="Close">
+            aria-label="Close"
+          >
             <FontAwesomeIcon icon={faCircleXmark} />
           </button>
         </div>
@@ -86,10 +100,12 @@ export const ReviewsModal = () => {
         <div className="modal-body">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-2">
-              <label htmlFor="title" className="form-label">Título </label>
+              <label htmlFor="title" className="form-label">
+                Título{" "}
+              </label>
               <input
                 type="text"
-                className={`form-control ${errors.title ? 'is-invalid' : ''}`}
+                className={`form-control ${errors.title ? "is-invalid" : ""}`}
                 id="title"
                 placeholder="Experiencia en Servicio..."
                 {...register("title", titleValidations)}
@@ -101,9 +117,11 @@ export const ReviewsModal = () => {
             </div>
 
             <div className="mb-2">
-              <label htmlFor="review" className="form-label">¿Qué opinas de la barbería? </label>
+              <label htmlFor="review" className="form-label">
+                ¿Qué opinas de la barbería?{" "}
+              </label>
               <textarea
-                className={`form-control ${errors.review ? 'is-invalid' : ''}`}
+                className={`form-control ${errors.review ? "is-invalid" : ""}`}
                 id="review"
                 rows="3"
                 placeholder="Excelente servicio..."
@@ -120,5 +138,5 @@ export const ReviewsModal = () => {
         </div>
       </div>
     </Modal>
-  )
-}
+  );
+};

@@ -1,5 +1,10 @@
-import { Navigate, Route, Routes } from "react-router-dom"
-import { UserBookingsPage, UserPage, UserPasswordPage, UserReviewsPage } from "../pages"
+import { Navigate, Route, Routes } from "react-router-dom";
+import {
+  UserBookingsPage,
+  UserPage,
+  UserPasswordPage,
+  UserReviewsPage,
+} from "../pages";
 
 export const UserRoutes = () => {
   return (
@@ -10,5 +15,5 @@ export const UserRoutes = () => {
       <Route path="/bookings" element={<UserBookingsPage />} />
       <Route path="/*" element={<Navigate to={"/account"} />} />
     </Routes>
-  )
-}
+  );
+};

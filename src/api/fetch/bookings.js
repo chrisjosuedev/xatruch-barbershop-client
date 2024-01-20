@@ -1,10 +1,10 @@
-import xatruchBarberApi from '../clientApi';
+import xatruchBarberApi from "../clientApi";
 
 // GET
 export const getAllUserBookings = async () => {
   const {
     data: { data },
-  } = await xatruchBarberApi.get('/bookings/orders/users');
+  } = await xatruchBarberApi.get("/bookings/orders/users");
   return data;
 };
 

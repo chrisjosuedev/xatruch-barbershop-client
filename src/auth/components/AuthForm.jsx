@@ -1,31 +1,39 @@
 import { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import Swal from "sweetalert2";
 
-import { useAuthStore } from "../../hooks"
-import { alertSuccess, emailValidations, passwordValidations } from "../../helpers";
+import { useAuthStore } from "../../hooks";
+import {
+  alertSuccess,
+  emailValidations,
+  passwordValidations,
+} from "../../helpers";
 
 const initForm = {
   email: "",
-  password: ""
-}
+  password: "",
+};
 
 export const AuthForm = () => {
-
   const navigate = useNavigate();
 
   const { startLogin, errors: authErrors } = useAuthStore();
 
-  const { register, handleSubmit, setError, formState: { errors } } = useForm({ defaultValues: initForm });
-  
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm({ defaultValues: initForm });
+
   useEffect(() => {
     if (authErrors && authErrors.length > 0) {
       for (const error of authErrors) {
         setError(error.field, {
           type: "server",
-          message: error.message
+          message: error.message,
         });
       }
     }
@@ -33,13 +41,12 @@ export const AuthForm = () => {
 
   const onSubmit = async (data) => {
     const { email, password } = data;
-    startLogin({ email, password })
-      .then(() => {
-        const successInfo = alertSuccess("Inicio de Sesión Exitoso");
-        Swal.fire(successInfo);
-        navigate("/services");
-      });
-  }
+    startLogin({ email, password }).then(() => {
+      const successInfo = alertSuccess("Inicio de Sesión Exitoso");
+      Swal.fire(successInfo);
+      navigate("/services");
+    });
+  };
 
   return (
     <div className="card text-center font-weight-bold shadow animate__animated animate__fadeIn">
@@ -50,7 +57,7 @@ export const AuthForm = () => {
           <div className="form-row mb-2">
             <input
               type="text"
-              className={`form-control ${errors.email ? 'is-invalid' : ''}`}
+              className={`form-control ${errors.email ? "is-invalid" : ""}`}
               placeholder="Email"
               {...register("email", emailValidations)}
             />
@@ -61,7 +68,7 @@ export const AuthForm = () => {
           <div className="form-row">
             <input
               type="password"
-              className={`form-control ${errors.password ? 'is-invalid' : ''}`}
+              className={`form-control ${errors.password ? "is-invalid" : ""}`}
               {...register("password", passwordValidations())}
               placeholder="Password"
             />
@@ -84,10 +91,11 @@ export const AuthForm = () => {
           <small className="form-text text-muted text-center">
             ¿No tienes una cuenta?
           </small>
-          <Link className="signup-link" to={"/auth/signup"}>Registrarse</Link>
+          <Link className="signup-link" to={"/auth/signup"}>
+            Registrarse
+          </Link>
         </div>
-
       </div>
     </div>
-  )
-}
+  );
+};

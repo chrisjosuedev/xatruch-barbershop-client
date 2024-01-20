@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import Modal from "react-modal"
+import Modal from "react-modal";
 import Swal from "sweetalert2";
 
 import DatePicker, { registerLocale } from "react-datepicker";
@@ -9,42 +9,58 @@ import { Controller, useForm } from "react-hook-form";
 import { differenceInSeconds } from "date-fns";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleXmark, faFloppyDisk, faWrench } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCircleXmark,
+  faFloppyDisk,
+  faWrench,
+} from "@fortawesome/free-solid-svg-icons";
 
 import { useUiStore } from "../../../hooks/useUiStore";
 import { customStyles } from "../../../helpers/ModalCustomStyles";
 
-import { alertSuccess, formatStringToDate, formatTo24hrs } from "../../../helpers";
+import {
+  alertSuccess,
+  formatStringToDate,
+  formatTo24hrs,
+} from "../../../helpers";
 
-import 'react-datepicker/dist/react-datepicker.min.css';
+import "react-datepicker/dist/react-datepicker.min.css";
 import { useSettingStore } from "../../../hooks/useSettingStore";
 
-Modal.setAppElement('#root');
+Modal.setAppElement("#root");
 
 /** ES DatePicker */
-registerLocale('es', es);
+registerLocale("es", es);
 
 export const SettingsModal = () => {
-
-  const { control, handleSubmit,
-    reset, clearErrors, setError, formState: { errors } } = useForm();
+  const {
+    control,
+    handleSubmit,
+    reset,
+    clearErrors,
+    setError,
+    formState: { errors },
+  } = useForm();
   const { isModalOpen, startCloseModal } = useUiStore();
   const { startSavingSetting, message, activeSetting } = useSettingStore();
-
 
   useEffect(() => {
     if (activeSetting !== null) {
       reset({
         ...activeSetting,
-        startDailyAvailability: formatStringToDate(activeSetting.startDailyAvailability),
-        endDailyAvailability: formatStringToDate(activeSetting.endDailyAvailability),
+        startDailyAvailability: formatStringToDate(
+          activeSetting.startDailyAvailability,
+        ),
+        endDailyAvailability: formatStringToDate(
+          activeSetting.endDailyAvailability,
+        ),
       });
     }
   }, [activeSetting]);
 
   useEffect(() => {
     if (message !== undefined) {
-      const infoMessage = alertSuccess(message, 'success');
+      const infoMessage = alertSuccess(message, "success");
       Swal.fire(infoMessage);
     }
   }, [message]);
@@ -53,17 +69,23 @@ export const SettingsModal = () => {
     reset();
     clearErrors();
     startCloseModal();
-  }
+  };
 
   const onSubmit = async (data) => {
     const { startDailyAvailability, endDailyAvailability, ...rest } = data;
-    const difference = differenceInSeconds(endDailyAvailability, startDailyAvailability);
+    const difference = differenceInSeconds(
+      endDailyAvailability,
+      startDailyAvailability,
+    );
 
     if (isNaN(difference) || difference <= 0) {
       setError("endDailyAvailability", {
         type: "custom",
       });
-      const infoMessage = alertSuccess("Fecha de Fin no puede ser menor o igual que la de Inicio.", "error");
+      const infoMessage = alertSuccess(
+        "Fecha de Fin no puede ser menor o igual que la de Inicio.",
+        "error",
+      );
       Swal.fire(infoMessage);
       return;
     }
@@ -73,15 +95,19 @@ export const SettingsModal = () => {
       await startSavingSetting({
         ...rest,
         startDailyAvailability: formatTo24hrs(startDailyAvailability),
-        endDailyAvailability: formatTo24hrs(endDailyAvailability)
+        endDailyAvailability: formatTo24hrs(endDailyAvailability),
       });
       closeModalAndClean();
     } catch (error) {
-      const { response: { data: { message } } } = error;
+      const {
+        response: {
+          data: { message },
+        },
+      } = error;
       const errorInfo = alertSuccess(message, "error");
       Swal.fire(errorInfo);
     }
-  }
+  };
 
   return (
     <Modal
@@ -101,7 +127,8 @@ export const SettingsModal = () => {
             type="button"
             onClick={closeModalAndClean}
             className="close"
-            aria-label="Close">
+            aria-label="Close"
+          >
             <FontAwesomeIcon icon={faCircleXmark} />
           </button>
         </div>
@@ -109,7 +136,9 @@ export const SettingsModal = () => {
         <div className="modal-body">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
-              <label className="mr-2" htmlFor="end">Hora Inicio: </label>
+              <label className="mr-2" htmlFor="end">
+                Hora Inicio:{" "}
+              </label>
               <div className="col-md-12 mb-2 customDatePickerWidth">
                 <Controller
                   control={control}
@@ -117,14 +146,14 @@ export const SettingsModal = () => {
                   rules={{ required: true }}
                   render={({ field }) => (
                     <DatePicker
-                      className={`form-control ${errors.startDailyAvailability ? 'is-invalid' : ''}`}
+                      className={`form-control ${errors.startDailyAvailability ? "is-invalid" : ""}`}
                       selected={field.value}
-                      onChange={date => field.onChange(date)}
-                      locale='es'
+                      onChange={(date) => field.onChange(date)}
+                      locale="es"
                       timeCaption="Horario"
                       timeIntervals={60}
                       dateFormat="h:mm a"
-                      placeholderText='Seleccionar Inicio'
+                      placeholderText="Seleccionar Inicio"
                       showTimeSelectOnly
                       showTimeSelect
                       onKeyDown={(e) => {
@@ -134,7 +163,9 @@ export const SettingsModal = () => {
                   )}
                 />
               </div>
-              <label className="mr-2 mt-4" htmlFor="end">Hora de Fin: </label>
+              <label className="mr-2 mt-4" htmlFor="end">
+                Hora de Fin:{" "}
+              </label>
               <div className="col-md-12 customDatePickerWidth">
                 <Controller
                   control={control}
@@ -142,14 +173,14 @@ export const SettingsModal = () => {
                   rules={{ required: true }}
                   render={({ field }) => (
                     <DatePicker
-                      className={`form-control ${errors.endDailyAvailability ? 'is-invalid' : ''}`}
+                      className={`form-control ${errors.endDailyAvailability ? "is-invalid" : ""}`}
                       selected={field.value}
-                      onChange={date => field.onChange(date)}
-                      locale='es'
+                      onChange={(date) => field.onChange(date)}
+                      locale="es"
                       timeCaption="Horario"
                       timeIntervals={60}
                       dateFormat="h:mm a"
-                      placeholderText='Seleccionar Fin'
+                      placeholderText="Seleccionar Fin"
                       showTimeSelectOnly
                       showTimeSelect
                       onKeyDown={(e) => {
@@ -167,5 +198,5 @@ export const SettingsModal = () => {
         </div>
       </div>
     </Modal>
-  )
-}
+  );
+};

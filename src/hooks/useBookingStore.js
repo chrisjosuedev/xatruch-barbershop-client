@@ -1,10 +1,13 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { getAllUserBookings, getUserBookingDetailById } from '../api/fetch/bookings';
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getAllUserBookings,
+  getUserBookingDetailById,
+} from "../api/fetch/bookings";
 import {
   onLoadingUserBookings,
   onSetActiveUserBooking,
   onSetUserBookingDetail,
-} from '../store';
+} from "../store";
 
 export const useBookingStore = () => {
   const { userBookings, activeBooking, userbookingDetail, isLoadingBookings } =

@@ -1,6 +1,6 @@
-import { AppLayout } from "../layout/AppLayout"
-import { AccountLayout } from "../layout/AccountLayout"
-import { ProfileView } from "../views/ProfileView"
+import { AppLayout } from "../layout/AppLayout";
+import { AccountLayout } from "../layout/AccountLayout";
+import { ProfileView } from "../views/ProfileView";
 
 export const UserPage = () => {
   return (
@@ -9,5 +9,5 @@ export const UserPage = () => {
         <ProfileView />
       </AccountLayout>
     </AppLayout>
-  )
-}
+  );
+};

@@ -1,6 +1,6 @@
-import { AccountLayout } from "../../layout/AccountLayout"
-import { AppLayout } from "../../layout/AppLayout"
-import { PasswordUpdateView } from "../../views"
+import { AccountLayout } from "../../layout/AccountLayout";
+import { AppLayout } from "../../layout/AppLayout";
+import { PasswordUpdateView } from "../../views";
 
 export const UserPasswordPage = () => {
   return (
@@ -9,5 +9,5 @@ export const UserPasswordPage = () => {
         <PasswordUpdateView />
       </AccountLayout>
     </AppLayout>
-  )
-}
+  );
+};

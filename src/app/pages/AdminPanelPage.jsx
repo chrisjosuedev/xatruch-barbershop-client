@@ -1,6 +1,6 @@
-import { AdminLayout } from "../layout/AdminLayout"
-import { AppLayout } from "../layout/AppLayout"
-import { SettingsView } from "../views"
+import { AdminLayout } from "../layout/AdminLayout";
+import { AppLayout } from "../layout/AppLayout";
+import { SettingsView } from "../views";
 
 export const AdminPanelPage = () => {
   return (
@@ -9,5 +9,5 @@ export const AdminPanelPage = () => {
         <SettingsView />
       </AdminLayout>
     </AppLayout>
-  )
-}
+  );
+};

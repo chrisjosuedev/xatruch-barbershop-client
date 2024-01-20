@@ -3,7 +3,6 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 
-
 export const CardDetailService = ({ id, serviceName, price }) => {
   const [toCart, setToCart] = useState(true);
 
@@ -14,7 +13,7 @@ export const CardDetailService = ({ id, serviceName, price }) => {
   const onToCart = (id) => {
     console.log("Service Id: " + id);
     setToCart(!toCart);
-  }
+  };
 
   return (
     <div className="card m-2 animate__animated animate__fadeIn">
@@ -26,11 +25,11 @@ export const CardDetailService = ({ id, serviceName, price }) => {
           </div>
           <div className="col-md-4 text-right">
             <button onClick={() => onToCart(id)} className="btn btn-dark">
-              <FontAwesomeIcon icon={(toCart ? faCartPlus : faMinus)} />
+              <FontAwesomeIcon icon={toCart ? faCartPlus : faMinus} />
             </button>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};

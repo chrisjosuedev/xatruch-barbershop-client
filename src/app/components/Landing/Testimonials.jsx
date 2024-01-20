@@ -1,4 +1,4 @@
-import { Slider } from ".."
+import { Slider } from "..";
 
 export const Testimonials = ({ reviews }) => {
   return (
@@ -9,16 +9,19 @@ export const Testimonials = ({ reviews }) => {
             <h2> Nuestros clientes hablan... </h2>
           </div>
           <div className="col-lg-2">
-            <img className="img-quote" src="/assets/img/recursos/cita.svg" alt="cita" />
+            <img
+              className="img-quote"
+              src="/assets/img/recursos/cita.svg"
+              alt="cita"
+            />
           </div>
         </div>
       </section>
       <section className="slider">
         <div className="slider__container container__s">
-          <Slider 
-            reviews={reviews} />
+          <Slider reviews={reviews} />
         </div>
       </section>
     </section>
-  )
-}
+  );
+};

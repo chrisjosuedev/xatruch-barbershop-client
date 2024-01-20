@@ -1,7 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 export const bookingsSlice = createSlice({
-  name: 'booking',
+  name: "booking",
   initialState: {
     userBookings: [],
     userbookingDetail: [],
@@ -14,7 +14,7 @@ export const bookingsSlice = createSlice({
     onLoadingUserBookings: (state, { payload }) => {
       payload.forEach((booking) => {
         const exists = state.userBookings.some(
-          (bookingInStore) => bookingInStore.id === booking.id
+          (bookingInStore) => bookingInStore.id === booking.id,
         );
         if (!exists) state.userBookings.push(booking);
       });
@@ -25,7 +25,7 @@ export const bookingsSlice = createSlice({
     },
     onSetActiveUserBooking: (state, { payload }) => {
       state.activeBooking = state.userBookings.find(
-        (booking) => booking.id === payload
+        (booking) => booking.id === payload,
       );
     },
     onLogoutUserBookings: (state) => {

@@ -4,20 +4,22 @@ import { useUiStore } from "../../../hooks/useUiStore";
 import { useBookingStore } from "../../../hooks/useBookingStore";
 
 export const Actions = ({ values }) => {
-
   const { startFindUserBookingDetail } = useBookingStore();
-  const { startOpenModal  } = useUiStore();
+  const { startOpenModal } = useUiStore();
 
   const onBookingDetail = (values) => {
     startFindUserBookingDetail(values);
     startOpenModal();
-  }
+  };
 
   return (
     <>
-      <button onClick={() => onBookingDetail(values)} className="btn btn-dark mr-2 mt-2">
+      <button
+        onClick={() => onBookingDetail(values)}
+        className="btn btn-dark mr-2 mt-2"
+      >
         <FontAwesomeIcon icon={faInfoCircle} />
       </button>
     </>
-  )
-}
+  );
+};

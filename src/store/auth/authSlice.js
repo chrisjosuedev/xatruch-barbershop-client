@@ -46,7 +46,7 @@ export const authSlice = createSlice({
     },
     onSetLoadingProfileImage: (state, { payload }) => {
       state.isLoadingPicture = payload;
-    }
+    },
   },
 });
 

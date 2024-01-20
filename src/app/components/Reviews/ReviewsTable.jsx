@@ -1,23 +1,24 @@
-import { Table } from "../"
+import { Table } from "../";
 import { Actions } from "./ReviewActions";
 
 const columns = [
   {
     header: "Título",
-    accessorKey: "title"
+    accessorKey: "title",
   },
   {
     header: "Review",
-    accessorKey: "review"
+    accessorKey: "review",
   },
   {
     header: "Estatus",
     accessorKey: "isApproved",
-    cell: (props) => (
-      (props.getValue() ?
-        <span className="badge badge-success">Publicada</span> :
-        <span className="badge badge-danger">No aprobada</span>)
-    )
+    cell: (props) =>
+      props.getValue() ? (
+        <span className="badge badge-success">Publicada</span>
+      ) : (
+        <span className="badge badge-danger">No aprobada</span>
+      ),
   },
   {
     header: "",
@@ -26,19 +27,13 @@ const columns = [
       const { isApproved } = props.row.original;
       const actionsRows = {
         id: props.getValue(),
-        isApproved
-      }
-      return (<Actions values={actionsRows} />)
-    }
-  }
+        isApproved,
+      };
+      return <Actions values={actionsRows} />;
+    },
+  },
 ];
 
 export const ReviewsTable = ({ data }) => {
-  return (
-    <Table
-      data={data}
-      columns={columns}
-      filterBy={"Título, review..."}
-    />
-  )
-}
+  return <Table data={data} columns={columns} filterBy={"Título, review..."} />;
+};

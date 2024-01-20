@@ -1,21 +1,21 @@
-import { Table } from ".."
+import { Table } from "..";
 import { Actions } from "./ServicesActions";
 
 const columns = [
   {
     header: "Servicio",
-    accessorKey: "serviceName"
+    accessorKey: "serviceName",
   },
   {
     header: "Precio",
     accessorKey: "price",
-    cell: (props) => props.getValue().toFixed(2)
+    cell: (props) => props.getValue().toFixed(2),
   },
   {
     header: "",
     accessorKey: "id",
-    cell: (props) => (<Actions values={props.getValue()} />)
-  }
+    cell: (props) => <Actions values={props.getValue()} />,
+  },
 ];
 
 export const ServicesTable = ({ data }) => {
@@ -25,5 +25,5 @@ export const ServicesTable = ({ data }) => {
       columns={columns}
       filterBy={"Nombre del Servicio, precio..."}
     />
-  )
-}
+  );
+};

@@ -1,6 +1,6 @@
-import { AccountLayout } from "../../layout/AccountLayout"
-import { AppLayout } from "../../layout/AppLayout"
-import { UserBookingsView } from "../../views"
+import { AccountLayout } from "../../layout/AccountLayout";
+import { AppLayout } from "../../layout/AppLayout";
+import { UserBookingsView } from "../../views";
 
 export const UserBookingsPage = () => {
   return (
@@ -9,5 +9,5 @@ export const UserBookingsPage = () => {
         <UserBookingsView />
       </AccountLayout>
     </AppLayout>
-  )
-}
+  );
+};

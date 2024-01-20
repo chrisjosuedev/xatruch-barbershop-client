@@ -7,8 +7,11 @@ export const Header = () => {
         <div className="row header-container">
           <div className="col-md-6 head-text-section">
             <h1>Barbería como forma de arte.</h1>
-            <p className="header-text"> Cada dia muchas personas confían en nosotros, <br />
-              saben que nos tomamos el corte de cabello muy en serio. </p>
+            <p className="header-text">
+              {" "}
+              Cada dia muchas personas confían en nosotros, <br />
+              saben que nos tomamos el corte de cabello muy en serio.{" "}
+            </p>
             <Link to={"/services"} className="btn btn-dark contact-us">
               Ver Servicios
             </Link>
@@ -19,5 +22,5 @@ export const Header = () => {
         </div>
       </div>
     </header>
-  )
-}
+  );
+};

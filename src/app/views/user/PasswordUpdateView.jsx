@@ -10,21 +10,25 @@ import { updatePassword } from "../../../api/fetch/user";
 const initialForm = {
   currentPassword: "",
   newPassword: "",
-  confirmPassword: ""
-}
+  confirmPassword: "",
+};
 
 export const PasswordUpdateView = () => {
-
   const [passwordErrors, setpasswordErrors] = useState([]);
 
-  const { register, setError, handleSubmit, reset, formState: { errors } }
-    = useForm({ defaultValues: initialForm });
+  const {
+    register,
+    setError,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({ defaultValues: initialForm });
 
   const onSubmit = async (data) => {
     if (data.newPassword !== data.confirmPassword) {
       setError("confirmPassword", {
         type: "custom",
-        message: "Confirmar Contraseña no coincide con Nueva Contraseña."
+        message: "Confirmar Contraseña no coincide con Nueva Contraseña.",
       });
       return;
     }
@@ -43,38 +47,37 @@ export const PasswordUpdateView = () => {
       } = error;
       setpasswordErrors(errors);
     }
-  }
+  };
 
   return (
     <div className="row">
       <div className="col-md-12">
-        <h3 style={{ fontSize: "20px", fontWeight: "bold" }}>Cambiar Contraseña</h3>
+        <h3 style={{ fontSize: "20px", fontWeight: "bold" }}>
+          Cambiar Contraseña
+        </h3>
         <hr />
       </div>
       <div className="col-md-12 p-0 mb-2">
-        {
-          (passwordErrors.length > 0) &&
-          (
-            <div className="alert alert-danger">
-              <ul className="mb-0">
-                {
-                  passwordErrors.map((err, i) => (
-                    <li key={i}>{err.message}</li>
-                  ))
-                }
-              </ul>
-            </div>
-          )
-        }
+        {passwordErrors.length > 0 && (
+          <div className="alert alert-danger">
+            <ul className="mb-0">
+              {passwordErrors.map((err, i) => (
+                <li key={i}>{err.message}</li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
 
       <div className="col-md-8">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-2">
-            <label htmlFor="currentPassword" className="form-label">Escribe tu contraseña </label>
+            <label htmlFor="currentPassword" className="form-label">
+              Escribe tu contraseña{" "}
+            </label>
             <input
               type="password"
-              className={`form-control ${errors.currentPassword ? 'is-invalid' : ''}`}
+              className={`form-control ${errors.currentPassword ? "is-invalid" : ""}`}
               id="currentPassword"
               {...register("currentPassword", passwordValidations())}
               autoFocus
@@ -84,10 +87,12 @@ export const PasswordUpdateView = () => {
             </small>
           </div>
           <div className="mb-2">
-            <label htmlFor="newPassword" className="form-label">Nueva Contraseña </label>
+            <label htmlFor="newPassword" className="form-label">
+              Nueva Contraseña{" "}
+            </label>
             <input
               type="password"
-              className={`form-control ${errors.newPassword ? 'is-invalid' : ''}`}
+              className={`form-control ${errors.newPassword ? "is-invalid" : ""}`}
               id="newPassword"
               {...register("newPassword", passwordValidations("newPassword"))}
             />
@@ -97,12 +102,17 @@ export const PasswordUpdateView = () => {
           </div>
 
           <div className="mb-2">
-            <label htmlFor="confirmPassword" className="form-label">Confirmar Contraseña </label>
+            <label htmlFor="confirmPassword" className="form-label">
+              Confirmar Contraseña{" "}
+            </label>
             <input
               type="password"
-              className={`form-control ${errors.confirmPassword ? 'is-invalid' : ''}`}
+              className={`form-control ${errors.confirmPassword ? "is-invalid" : ""}`}
               id="confirmPassword"
-              {...register("confirmPassword", passwordValidations("confirmPassword"))}
+              {...register(
+                "confirmPassword",
+                passwordValidations("confirmPassword"),
+              )}
             />
             <small className="invalid-feedback text-left">
               {errors.confirmPassword && errors.confirmPassword.message}
@@ -115,5 +125,5 @@ export const PasswordUpdateView = () => {
         </form>
       </div>
     </div>
-  )
-}
+  );
+};

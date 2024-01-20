@@ -6,26 +6,32 @@ import { alertInfo } from "../../../helpers";
 import { useBarberStore } from "../../../hooks";
 
 export const Actions = ({ values }) => {
-
   const { startOpenModal } = useUiStore();
-  const { startFindBarber, startDeleting } = useBarberStore()
+  const { startFindBarber, startDeleting } = useBarberStore();
 
   const onUpdate = (id) => {
-    startFindBarber(id)
+    startFindBarber(id);
     startOpenModal();
-  }
+  };
 
   const onDelete = (id) => {
-    startFindBarber(id)
-    const logoutInfo = alertInfo("¿Seguro que dar de baja al barbero?", "info", "Si");
+    startFindBarber(id);
+    const logoutInfo = alertInfo(
+      "¿Seguro que dar de baja al barbero?",
+      "info",
+      "Si",
+    );
     Swal.fire(logoutInfo).then((result) => {
-      if (result.isConfirmed) return startDeleting(id)
+      if (result.isConfirmed) return startDeleting(id);
     });
-  }
+  };
 
   return (
     <>
-      <button onClick={() => onUpdate(values)} className="btn btn-dark mr-2 mt-2">
+      <button
+        onClick={() => onUpdate(values)}
+        className="btn btn-dark mr-2 mt-2"
+      >
         <FontAwesomeIcon icon={faEdit} />
       </button>
       <button
@@ -35,7 +41,6 @@ export const Actions = ({ values }) => {
       >
         <FontAwesomeIcon icon={faUserSlash} />
       </button>
-
     </>
-  )
-}
+  );
+};

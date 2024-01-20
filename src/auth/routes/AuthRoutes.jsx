@@ -1,5 +1,5 @@
-import { Navigate, Route, Routes } from "react-router-dom"
-import { AuthPage, SignUpPage } from "../pages"
+import { Navigate, Route, Routes } from "react-router-dom";
+import { AuthPage, SignUpPage } from "../pages";
 
 export const AuthRoutes = () => {
   /**
@@ -13,5 +13,5 @@ export const AuthRoutes = () => {
       <Route path="/signup" element={<SignUpPage />} />
       <Route path="/*" element={<Navigate to={"/auth/signin"} />} />
     </Routes>
-  )
-}
+  );
+};

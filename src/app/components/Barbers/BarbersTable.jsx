@@ -1,24 +1,20 @@
-import { Table } from ".."
+import { Table } from "..";
 import { Actions } from "./BarberActions";
 
 const columns = [
   {
     header: "Nombre Completo",
-    accessorKey: "fullName"
+    accessorKey: "fullName",
   },
   {
     header: "",
     accessorKey: "id",
-    cell: (props) => (<Actions values={props.getValue()} />)
-  }
+    cell: (props) => <Actions values={props.getValue()} />,
+  },
 ];
 
 export const BarbersTable = ({ data }) => {
   return (
-    <Table
-      data={data}
-      columns={columns}
-      filterBy={"Nombre Completo..."}
-    />
-  )
-}
+    <Table data={data} columns={columns} filterBy={"Nombre Completo..."} />
+  );
+};

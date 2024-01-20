@@ -1,6 +1,13 @@
-import { faCalendarCheck, faList, faTableColumns, faTag, faUserGear, faWrench } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { NavLink } from "react-router-dom"
+import {
+  faCalendarCheck,
+  faList,
+  faTableColumns,
+  faTag,
+  faUserGear,
+  faWrench,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { NavLink } from "react-router-dom";
 
 export const AdminLayout = ({ children }) => {
   return (
@@ -14,40 +21,56 @@ export const AdminLayout = ({ children }) => {
             <ul className="list-group list-group-flush">
               <li className="list-group-item p-0">
                 <NavLink
-                  className={({ isActive }) => `btn btn-sidebar btn-block rounded-0 shadow-none ${isActive ? 'side-active' : ''}`}
-                  to={"/settings"} end>
+                  className={({ isActive }) =>
+                    `btn btn-sidebar btn-block rounded-0 shadow-none ${isActive ? "side-active" : ""}`
+                  }
+                  to={"/settings"}
+                  end
+                >
                   <FontAwesomeIcon icon={faWrench} />
                   <span className="ml-2">Settings</span>
                 </NavLink>
               </li>
               <li className="list-group-item p-0">
                 <NavLink
-                  className={({ isActive }) => `btn btn-sidebar btn-block rounded-0 shadow-none ${isActive ? 'side-active' : ''}`}
-                  to={"/settings/barbers"}>
+                  className={({ isActive }) =>
+                    `btn btn-sidebar btn-block rounded-0 shadow-none ${isActive ? "side-active" : ""}`
+                  }
+                  to={"/settings/barbers"}
+                >
                   <FontAwesomeIcon icon={faUserGear} />
                   <span className="ml-2">Barberos</span>
                 </NavLink>
               </li>
               <li className="list-group-item p-0">
                 <NavLink
-                  className={({ isActive }) => `btn btn-sidebar btn-block rounded-0 shadow-none ${isActive ? 'side-active' : ''}`}
-                  to={"/settings/services"}>
+                  className={({ isActive }) =>
+                    `btn btn-sidebar btn-block rounded-0 shadow-none ${isActive ? "side-active" : ""}`
+                  }
+                  to={"/settings/services"}
+                >
                   <FontAwesomeIcon icon={faTag} />
                   <span className="ml-2">Servicios</span>
                 </NavLink>
               </li>
               <li className="list-group-item p-0">
                 <NavLink
-                  className={({ isActive }) => `btn btn-sidebar btn-block rounded-0 shadow-none ${isActive ? 'side-active' : ''}`}
-                  to={"/settings/reviews"}>
+                  className={({ isActive }) =>
+                    `btn btn-sidebar btn-block rounded-0 shadow-none ${isActive ? "side-active" : ""}`
+                  }
+                  to={"/settings/reviews"}
+                >
                   <FontAwesomeIcon icon={faList} />
                   <span className="ml-2">Reviews</span>
                 </NavLink>
               </li>
               <li className="list-group-item p-0">
                 <NavLink
-                  className={({ isActive }) => `btn btn-sidebar btn-block rounded-0 shadow-none ${isActive ? 'side-active' : ''}`}
-                  to={"/settings/bookings"}>
+                  className={({ isActive }) =>
+                    `btn btn-sidebar btn-block rounded-0 shadow-none ${isActive ? "side-active" : ""}`
+                  }
+                  to={"/settings/bookings"}
+                >
                   <FontAwesomeIcon icon={faCalendarCheck} />
                   <span className="ml-2"> Bookings </span>
                 </NavLink>
@@ -60,5 +83,5 @@ export const AdminLayout = ({ children }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};

@@ -2,7 +2,9 @@ import xatruchBarberApi from "../clientApi";
 
 // GET
 export const renewToken = async () => {
-  const { data: { data } } = await xatruchBarberApi.get("/auth/refresh-token");
+  const {
+    data: { data },
+  } = await xatruchBarberApi.get("/auth/refresh-token");
   return {
     user: data,
   };
@@ -10,7 +12,9 @@ export const renewToken = async () => {
 
 // POST
 export const singIn = async (email, password) => {
-  const { data: { message, data } } = await xatruchBarberApi.post("/auth/signin", {
+  const {
+    data: { message, data },
+  } = await xatruchBarberApi.post("/auth/signin", {
     email,
     password,
   });
@@ -21,7 +25,9 @@ export const singIn = async (email, password) => {
 };
 
 export const signUp = async (fullName, email, password) => {
-  const { data: { message, data } } = await xatruchBarberApi.post("/auth/signup", {
+  const {
+    data: { message, data },
+  } = await xatruchBarberApi.post("/auth/signup", {
     fullName,
     email,
     password,

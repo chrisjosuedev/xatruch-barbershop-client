@@ -3,5 +3,5 @@ export const SpinnerLoader = () => {
     <div className="spinner-border text-secondary" role="status">
       <span className="sr-only">Loading...</span>
     </div>
-  )
-}
+  );
+};

@@ -1,26 +1,28 @@
 import Modal from "react-modal";
 
-import { faCalendarCheck, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCalendarCheck,
+  faCircleXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { customStyles, formatTime } from "../../../helpers";
 import { useUiStore } from "../../../hooks/useUiStore";
 import { useBookingStore } from "../../../hooks/useBookingStore";
 import { useMemo } from "react";
 
-Modal.setAppElement('#root');
+Modal.setAppElement("#root");
 
 export const BookingsModal = () => {
-
   const { isModalOpen, startCloseModal } = useUiStore();
   const { userbookingDetail, activeBooking } = useBookingStore();
 
   const closeModalAndClean = () => {
     startCloseModal();
-  }
+  };
 
   const total = useMemo(() => {
     return userbookingDetail.reduce((prev, curr) => prev + curr.price, 0);
-  }, [userbookingDetail])
+  }, [userbookingDetail]);
 
   return (
     <Modal
@@ -40,7 +42,8 @@ export const BookingsModal = () => {
             type="button"
             onClick={closeModalAndClean}
             className="close"
-            aria-label="Close">
+            aria-label="Close"
+          >
             <FontAwesomeIcon icon={faCircleXmark} />
           </button>
         </div>
@@ -76,14 +79,14 @@ export const BookingsModal = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {
-                    userbookingDetail.map((detail, i) => (
-                      <tr key={i}>
-                        <td>{detail.serviceName}</td>
-                        <td className="text-right">L. {(detail.price).toFixed(2)}</td>
-                      </tr>
-                    ))
-                  }
+                  {userbookingDetail.map((detail, i) => (
+                    <tr key={i}>
+                      <td>{detail.serviceName}</td>
+                      <td className="text-right">
+                        L. {detail.price.toFixed(2)}
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
@@ -91,13 +94,11 @@ export const BookingsModal = () => {
           <div className="row">
             <div className="col-md-12 text-right p-4">
               <b>Total: </b>
-              <span>
-                L. {total.toFixed(2)}
-              </span>
+              <span>L. {total.toFixed(2)}</span>
             </div>
           </div>
         </div>
       </div>
     </Modal>
-  )
-}
+  );
+};

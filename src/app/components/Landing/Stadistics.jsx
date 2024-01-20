@@ -21,5 +21,5 @@ export const Stadistics = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};

@@ -5,7 +5,7 @@ import { Actions } from "./BookingActions";
 const columns = [
   {
     header: "# Sesión",
-    accessorKey: "id"
+    accessorKey: "id",
   },
   {
     header: "Fecha de Sesión",
@@ -14,27 +14,24 @@ const columns = [
   {
     header: "Hora de Sesión",
     accessorKey: "bookingTime",
-    cell: (props) => (formatTime(props.getValue()))
+    cell: (props) => formatTime(props.getValue()),
   },
   {
     header: "Barbero",
-    accessorKey: "barber"
+    accessorKey: "barber",
   },
   {
     header: "",
     accessorKey: "user",
     cell: (props) => {
       const { id } = props.row.original;
-      return (<Actions values={id} />)
-    }
-  }
+      return <Actions values={id} />;
+    },
+  },
 ];
 
 export const BookingsTable = ({ data }) => {
   return (
-    <Table
-      data={data}
-      columns={columns}
-      filterBy={"Barbero, Sesión..."} />
-  )
-}
+    <Table data={data} columns={columns} filterBy={"Barbero, Sesión..."} />
+  );
+};

@@ -1,23 +1,31 @@
-import { useEffect } from 'react'
-import { useForm } from 'react-hook-form'
-import Modal from 'react-modal'
-import Swal from 'sweetalert2'
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import Modal from "react-modal";
+import Swal from "sweetalert2";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircleXmark, faFloppyDisk, faTag } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCircleXmark,
+  faFloppyDisk,
+  faTag,
+} from "@fortawesome/free-solid-svg-icons";
 
-import { useUiStore } from '../../../hooks/useUiStore'
-import { customStyles } from '../../../helpers/ModalCustomStyles'
+import { useUiStore } from "../../../hooks/useUiStore";
+import { customStyles } from "../../../helpers/ModalCustomStyles";
 
-import { alertSuccess, priceValidations, serviceNameValidations } from '../../../helpers'
-import { useServiceStore } from '../../../hooks/useServiceStore'
+import {
+  alertSuccess,
+  priceValidations,
+  serviceNameValidations,
+} from "../../../helpers";
+import { useServiceStore } from "../../../hooks/useServiceStore";
 
-Modal.setAppElement('#root')
+Modal.setAppElement("#root");
 
 const initForm = {
-  serviceName: '',
+  serviceName: "",
   price: 0,
-}
+};
 
 export const ServicesModal = () => {
   const {
@@ -27,46 +35,46 @@ export const ServicesModal = () => {
     setError,
     reset,
     formState: { errors },
-  } = useForm({ defaultValues: initForm })
+  } = useForm({ defaultValues: initForm });
 
-  const { isModalOpen, startCloseModal } = useUiStore()
-  const { message, activeService, serviceErrors, startSavingService } = useServiceStore()
+  const { isModalOpen, startCloseModal } = useUiStore();
+  const { message, activeService, serviceErrors, startSavingService } =
+    useServiceStore();
 
   const closeModalAndClean = () => {
-    reset()
-    clearErrors()
-    startCloseModal()
-  }
+    reset();
+    clearErrors();
+    startCloseModal();
+  };
 
   useEffect(() => {
-    if (activeService !== null) reset(activeService)
-  }, [activeService])
+    if (activeService !== null) reset(activeService);
+  }, [activeService]);
 
   useEffect(() => {
     if (message !== undefined) {
-      const successInfo = alertSuccess(message, 'success')
-      Swal.fire(successInfo)
+      const successInfo = alertSuccess(message, "success");
+      Swal.fire(successInfo);
     }
-  }, [message])
+  }, [message]);
 
   useEffect(() => {
     if (serviceErrors && serviceErrors.length > 0) {
       for (const error of serviceErrors) {
         setError(error.field, {
-          type: 'server',
+          type: "server",
           message: error.message,
-        })
+        });
       }
     }
-  }, [serviceErrors])
+  }, [serviceErrors]);
 
   const onSubmit = async (data) => {
-    startSavingService(data)
-      .then(() => {
-        reset()
-        startCloseModal()
-      })
-  }
+    startSavingService(data).then(() => {
+      reset();
+      startCloseModal();
+    });
+  };
 
   return (
     <Modal
@@ -96,14 +104,14 @@ export const ServicesModal = () => {
           <form onSubmit={handleSubmit(onSubmit)} noValidate>
             <div className="mb-4">
               <label htmlFor="serviceName" className="form-label">
-                Nombre del Servicio{' '}
+                Nombre del Servicio{" "}
               </label>
               <input
                 type="text"
-                className={`form-control ${errors.serviceName ? 'is-invalid' : ''}`}
+                className={`form-control ${errors.serviceName ? "is-invalid" : ""}`}
                 id="serviceName"
                 placeholder="Corte de cabello..."
-                {...register('serviceName', serviceNameValidations)}
+                {...register("serviceName", serviceNameValidations)}
                 autoFocus
               />
               <small className="invalid-feedback text-left">
@@ -112,14 +120,14 @@ export const ServicesModal = () => {
             </div>
             <div className="mb-4">
               <label htmlFor="price" className="form-label">
-                Precio del Servicio{' '}
+                Precio del Servicio{" "}
               </label>
               <input
                 type="text"
-                className={`form-control ${errors.price ? 'is-invalid' : ''}`}
+                className={`form-control ${errors.price ? "is-invalid" : ""}`}
                 id="price"
                 placeholder="Corte de cabello..."
-                {...register('price', priceValidations)}
+                {...register("price", priceValidations)}
               />
               <small className="invalid-feedback text-left">
                 {errors.price && errors.price.message}
@@ -132,5 +140,5 @@ export const ServicesModal = () => {
         </div>
       </div>
     </Modal>
-  )
-}
+  );
+};
