@@ -1,12 +1,13 @@
-import { AdminLayout } from "../../layout/AdminLayout";
-import { AppLayout } from "../../layout/AppLayout";
+import { AdminLayout } from '../../layout/AdminLayout'
+import { AppLayout } from '../../layout/AppLayout'
+import { UserBookingsView } from "../../views/user/UserBookingsView"
 
 export const BookingsPage = () => {
   return (
     <AppLayout isLanding={false}>
       <AdminLayout>
-        <div>BookingsView</div>
+        <UserBookingsView adminView={true} />
       </AdminLayout>
     </AppLayout>
-  );
-};
+  )
+}
