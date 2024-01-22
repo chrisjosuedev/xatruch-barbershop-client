@@ -18,7 +18,7 @@ export const ReviewsAdminView = () => {
   } = useReviewStore()
 
   useEffect(() => {
-    startLoadingReviews()
+    startLoadingReviews(true)
   }, [])
 
   useEffect(() => {

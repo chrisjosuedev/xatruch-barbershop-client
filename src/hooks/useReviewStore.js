@@ -6,7 +6,6 @@ import {
   onDeleteReview,
   onFindUserReview,
   onLoadReviews,
-  onLoadUserReviews,
   onSetMessage,
   onSetSelectedReview,
   onUpdateApprovedReviews,
@@ -23,7 +22,7 @@ import {
 import { onSetIsLoading } from '../store'
 
 export const useReviewStore = () => {
-  const { reviews, reviewsToApprove, userReviews, activeReview, isLoadingReviews, message } =
+  const { reviews, reviewsToApprove, activeReview, isLoadingReviews, message } =
     useSelector((state) => state.review)
   const dispatch = useDispatch()
 
@@ -31,12 +30,12 @@ export const useReviewStore = () => {
     dispatch(onFindUserReview({ id }))
   }
 
-  const startLoadingUserReviews = async () => {
-    const reviews = await getUserReviews()
-    dispatch(onLoadUserReviews(reviews))
-  }
-
-  const startLoadingReviews = async () => {
+  const startLoadingReviews = async (isAdmin = false) => {
+    if (!isAdmin) {
+      const userReviews = await getUserReviews()
+      dispatch(onLoadReviews(userReviews))
+      return
+    }
     const reviews = await getReviews()
     dispatch(onLoadReviews(reviews))
   }
@@ -98,13 +97,11 @@ export const useReviewStore = () => {
     isLoadingReviews,
     message,
     reviews,
-    userReviews,
     reviewsToApprove,
 
     // methods
     setActiveReview,
     startDeletingUserReview,
-    startLoadingUserReviews,
     startSavingReview,
     startSetActiveUserReview,
     startSetIsLoadingUserReviews,

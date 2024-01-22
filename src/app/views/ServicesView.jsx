@@ -1,16 +1,16 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from 'react'
 
-import { useForm } from "react-hook-form";
+import { useForm } from 'react-hook-form'
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 
-import { useServiceStore } from "../../hooks";
-import { Message, ServicesGrid, SpinnerLoader } from "../components";
+import { useServiceStore } from '../../hooks'
+import { Message, ServicesGrid, SpinnerLoader } from '../components'
 
 export const ServicesView = () => {
-  const [message, setMessage] = useState("");
-  const [success, setSuccess] = useState(true);
+  const [message, setMessage] = useState('')
+  const [success, setSuccess] = useState(true)
 
   const {
     services,
@@ -19,91 +19,91 @@ export const ServicesView = () => {
     startFilteringServices,
     startSetIsLoading,
     startFilteringReset,
-  } = useServiceStore();
+  } = useServiceStore()
 
   // Control Form
   const { register, handleSubmit, setFocus } = useForm({
     defaultValues: {
-      searchText: "",
+      searchText: '',
     },
-  });
+  })
 
   // Load Initial Services Data
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        await startLoadingServices();
-        setSuccess(true);
+        await startLoadingServices()
+        setSuccess(true)
       } catch (error) {
-        const { message } = error;
-        startSetIsLoading();
-        setMessage(message + " 👻");
-        setSuccess(false);
+        const { message } = error
+        startSetIsLoading()
+        setMessage(message + ' 👻')
+        setSuccess(false)
       }
-    };
-    fetchServices();
-    setFocus("searchText");
-  }, []);
+    }
+    fetchServices()
+    setFocus('searchText')
+  }, [])
 
   // Search Service
   const onSearchSubmit = (data) => {
-    const { searchText } = data;
-    if (searchText.length === 0) return;
+    const { searchText } = data
+    if (searchText.length === 0) return
 
-    startFilteringServices(searchText);
-  };
+    startFilteringServices(searchText)
+  }
 
   // Restore services when Input Change
   const onChangeSearch = (e) => {
-    const searchChange = e.target.value;
-    if (!!searchChange || searchChange.length === 0) startFilteringReset();
-  };
+    const searchChange = e.target.value
+    if (!!searchChange || searchChange.length === 0) startFilteringReset()
+  }
 
   // Render Messages or Services
   const renderServices = useMemo(() => {
-    if (!success) return <Message message={message} type="danger" />;
+    if (!success) return <Message message={message} type='danger' />
     if (services.length === 0) {
-      setMessage("Lo sentimos, no encontramos los servicios 😔");
-      return <Message message={message} type="dark" />;
+      setMessage('Lo sentimos, no encontramos los servicios 😔')
+      return <Message message={message} type='dark' />
     }
-    return <ServicesGrid services={services} />;
-  }, [success, message, services]);
+    return <ServicesGrid services={services} />
+  }, [success, message, services])
 
   return (
-    <div className="container-fluid">
-      <div className="container">
-        <div className="row p-4">
-          <div className="col-md-5">
+    <div className='container-fluid'>
+      <div className='container'>
+        <div className='row p-4'>
+          <div className='col-md-5'>
             <h4>
-              {" "}
+              {' '}
               <b> Filtrar </b>
             </h4>
             <hr />
             <form onSubmit={handleSubmit(onSearchSubmit)}>
-              <div className="form-row">
-                <div className="col-md-10 mt-2">
+              <div className='form-row'>
+                <div className='col-md-10 mt-2'>
                   <input
-                    type="text"
-                    className="form-control"
-                    {...register("searchText", {
+                    type='text'
+                    className='form-control'
+                    {...register('searchText', {
                       onChange: onChangeSearch,
                     })}
-                    autoComplete="off"
-                    placeholder="Nombre del Servicio..."
+                    autoComplete='off'
+                    placeholder='Nombre del Servicio...'
                   />
                 </div>
-                <div className="col-md-2 mt-2">
-                  <button className="btn btn-dark">
+                <div className='col-md-2 mt-2'>
+                  <button className='btn btn-dark'>
                     <FontAwesomeIcon icon={faMagnifyingGlass} />
                   </button>
                 </div>
-                <small className="form-text text-muted">
+                <small className='form-text text-muted'>
                   Ej. Mascarilla, Corte para Caballero...
                 </small>
               </div>
             </form>
           </div>
-          <div className="col-md-7">
+          <div className='col-md-7'>
             <h4>
               <b>Servicios Disponibles</b>
             </h4>
@@ -113,5 +113,5 @@ export const ServicesView = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

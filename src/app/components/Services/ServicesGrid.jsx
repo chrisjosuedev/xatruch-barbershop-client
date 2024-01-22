@@ -1,8 +1,8 @@
-import { CardDetailService } from "./CardServiceDetail";
+import { CardDetailService } from './CardServiceDetail'
 
 export const ServicesGrid = ({ services }) => {
   return (
-    <div className="container">
+    <div className='container'>
       {services.map((serv) => (
         <CardDetailService
           key={serv.id}
@@ -12,5 +12,5 @@ export const ServicesGrid = ({ services }) => {
         />
       ))}
     </div>
-  );
-};
+  )
+}

@@ -5,20 +5,13 @@ import { BookingsTable } from '../../components/Bookings/BookingsTable'
 import { BookingsModal } from '../../components/Bookings'
 
 export const UserBookingsView = ({ adminView = false }) => {
-  const { startLoadingUserBookings, isLoadingBookings, userBookings, bookings } =
-    useBookingStore()
+  const { startLoadingBookings, isLoadingBookings, bookings } = useBookingStore()
 
   useEffect(() => {
-    startLoadingUserBookings(adminView)
+    startLoadingBookings(adminView)
   }, [])
 
   // Render Messages or User Bookings
-  const renderUserBookings = useMemo(() => {
-    if (userBookings.length === 0)
-      return <Message message={'No parece haber nada por aquí... 😔'} type='dark' />
-    return <BookingsTable data={userBookings} />
-  }, [userBookings])
-
   const renderBookings = useMemo(() => {
     if (bookings.length === 0)
       return <Message message={'No parece haber nada por aquí... 😔'} type='dark' />
@@ -31,15 +24,7 @@ export const UserBookingsView = ({ adminView = false }) => {
         <h3 style={{ fontSize: '20px', fontWeight: 'bold' }}>Bookings</h3>
         <hr />
       </div>
-      <div className='col-md-12'>
-        {isLoadingBookings ? (
-          <SpinnerLoader />
-        ) : adminView ? (
-          renderBookings
-        ) : (
-          renderUserBookings
-        )}
-      </div>
+      <div className='col-md-12'>{isLoadingBookings ? <SpinnerLoader /> : renderBookings}</div>
       <BookingsModal />
     </div>
   )

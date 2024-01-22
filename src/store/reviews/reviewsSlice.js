@@ -3,7 +3,6 @@ import { createSlice } from '@reduxjs/toolkit'
 export const reviewsSlice = createSlice({
   name: 'review',
   initialState: {
-    userReviews: [],
     reviews: [],
     activeReview: null,
     isLoadingReviews: true,
@@ -29,15 +28,10 @@ export const reviewsSlice = createSlice({
       })
       state.message = payload.message
     },
-    onLoadUserReviews: (state, { payload }) => {
+    onLoadReviews: (state, { payload }) => {
       payload.forEach((review) => {
-        const exists = state.userReviews.some(
-          (reviewInStore) => reviewInStore.id === review.id
-        )
-        if (!exists) {
-          const { user, ...rest } = review
-          state.userReviews.push(rest)
-        }
+        const exists = state.reviews.some((reviewInStore) => reviewInStore.id === review.id)
+        if (!exists) state.reviews.push(review)
       })
       state.isLoadingReviews = false
     },
@@ -52,13 +46,6 @@ export const reviewsSlice = createSlice({
     },
     onFindUserReview: (state, { payload }) => {
       state.activeReview = state.userReviews.find((review) => review.id === payload.id)
-    },
-    onLoadReviews: (state, { payload }) => {
-      payload.forEach((review) => {
-        const exists = state.reviews.some((reviewInStore) => reviewInStore.id === review.id)
-        if (!exists) state.reviews.push(review)
-      })
-      state.isLoadingReviews = false
     },
     onApproveReviews: (state, { payload }) => {
       if (!state.reviewsToApprove.includes(payload)) {
@@ -80,10 +67,10 @@ export const reviewsSlice = createSlice({
       state.message = payload
     },
     onLogoutReviews: (state) => {
-      state.userReviews = []
       state.reviews = []
       state.activeReview = null
       state.isLoadingReviews = true
+      state.reviewsToApprove = []
       state.message = undefined
     },
   },
@@ -96,7 +83,6 @@ export const {
   onDeleteReview,
   onFindUserReview,
   onLoadReviews,
-  onLoadUserReviews,
   onSetLoadingReview,
   onSetSelectedReview,
   onUpdateReview,

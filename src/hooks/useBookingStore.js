@@ -7,28 +7,21 @@ import {
 } from '../api/fetch/bookings'
 import {
   onLoadBookings,
-  onLoadingUserBookings,
   onSetActiveBooking,
-  onSetActiveUserBooking,
   onSetUserBookingDetail,
   onSetView,
 } from '../store'
 
 export const useBookingStore = () => {
-  const {
-    userBookings,
-    activeBooking,
-    userbookingDetail,
-    isLoadingBookings,
-    bookings,
-    admin,
-  } = useSelector((state) => state.booking)
+  const { activeBooking, userbookingDetail, isLoadingBookings, bookings, admin } = useSelector(
+    (state) => state.booking
+  )
   const dispatch = useDispatch()
 
   const startFindUserBookingDetail = async (id, admin) => {
     if (!admin) {
       const bookingUserDetails = await getUserBookingDetailById(id)
-      dispatch(onSetActiveUserBooking(id))
+      dispatch(onSetActiveBooking(id))
       dispatch(onSetUserBookingDetail(bookingUserDetails))
       return
     }
@@ -37,10 +30,10 @@ export const useBookingStore = () => {
     dispatch(onSetUserBookingDetail(bookingDetails))
   }
 
-  const startLoadingUserBookings = async (adminView) => {
+  const startLoadingBookings = async (adminView) => {
     if (!adminView) {
       const userBookings = await getAllUserBookings()
-      dispatch(onLoadingUserBookings(userBookings))
+      dispatch(onLoadBookings(userBookings))
       dispatch(onSetView(false))
       return
     }
@@ -51,7 +44,6 @@ export const useBookingStore = () => {
 
   return {
     // props
-    userBookings,
     userbookingDetail,
     isLoadingBookings,
     activeBooking,
@@ -59,7 +51,7 @@ export const useBookingStore = () => {
     admin,
 
     // methods
-    startLoadingUserBookings,
+    startLoadingBookings,
     startFindUserBookingDetail,
   }
 }

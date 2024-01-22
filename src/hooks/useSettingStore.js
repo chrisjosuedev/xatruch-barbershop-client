@@ -17,7 +17,6 @@ import {
   onClearMessage,
   onDeleteSetting,
   onSetErrors,
-  onSetMessage,
   onSetSettingStatus,
   onUpdateSetting,
 } from "../store/settings/settingSlice";
@@ -50,7 +49,7 @@ export const useSettingStore = () => {
     dispatch(onSetSettingStatus({ setting, message }));
     setTimeout(() => {
       dispatch(onClearMessage());
-    }, 3000);
+    }, 1000);
   };
 
   // Saving Setting
