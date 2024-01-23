@@ -1,18 +1,14 @@
-import { useEffect, useRef } from "react";
-import Swal from "sweetalert2";
-import { useForm } from "react-hook-form";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faUpload } from "@fortawesome/free-solid-svg-icons";
-import { useAuthStore } from "../../hooks/useAuthStore";
-import {
-  alertSuccess,
-  emailValidations,
-  fullNameValidations,
-} from "../../helpers";
-import { SpinnerLoader } from "../components/SpinnerLoader";
+import { useEffect, useRef } from 'react'
+import Swal from 'sweetalert2'
+import { useForm } from 'react-hook-form'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheck, faUpload } from '@fortawesome/free-solid-svg-icons'
+import { useAuthStore } from '../../hooks/useAuthStore'
+import { alertSuccess, emailValidations, fullNameValidations } from '../../helpers'
+import { SpinnerLoader } from '../components/SpinnerLoader'
 
 export const ProfileView = () => {
-  const fileInputRef = useRef();
+  const fileInputRef = useRef()
 
   const {
     user,
@@ -21,53 +17,53 @@ export const ProfileView = () => {
     startUploadingProfilePicture,
     message,
     errors: userErrors,
-  } = useAuthStore();
+  } = useAuthStore()
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm()
 
   useEffect(() => {
-    reset(user);
-  }, []);
+    reset(user)
+  }, [])
 
   const onUpload = ({ target }) => {
-    if (target.files === 0) return;
+    if (target.files === 0) return
 
-    const fileSizeKb = target.files[0].size / 1024;
+    const fileSizeKb = target.files[0].size / 1024
     if (fileSizeKb > 1024) {
-      const errorMsg = alertSuccess("Tamaño de imagen mayor a 1MB.", "error");
-      Swal.fire(errorMsg);
-      return;
+      const errorMsg = alertSuccess('Tamaño de imagen mayor a 1MB.', 'error')
+      Swal.fire(errorMsg)
+      return
     }
 
     startUploadingProfilePicture(target.files[0]).then(() => {
-      const successMsg = alertSuccess("Subida de Imagen Exitosa");
-      Swal.fire(successMsg);
-    });
-  };
+      const successMsg = alertSuccess('Subida de Imagen Exitosa')
+      Swal.fire(successMsg)
+    })
+  }
 
   const onSubmit = (data) => {
-    const { fullName, email } = data;
+    const { fullName, email } = data
     startUpdateAuthProfile({ fullName, email }).then(() => {
-      const successMsg = alertSuccess("Perfil Actualizado Exitosamente");
-      Swal.fire(successMsg);
-    });
-  };
+      const successMsg = alertSuccess('Perfil Actualizado Exitosamente')
+      Swal.fire(successMsg)
+    })
+  }
 
   return (
-    <div className="row">
-      <div className="col-md-12">
-        <h3 style={{ fontSize: "20px", fontWeight: "bold" }}>Cuenta</h3>
+    <div className='row'>
+      <div className='col-md-12'>
+        <h3 style={{ fontSize: '20px', fontWeight: 'bold' }}>Cuenta</h3>
         <hr />
       </div>
-      <div className="col-md-12 p-0 mb-2">
+      <div className='col-md-12 p-0 mb-2'>
         {userErrors.length > 0 && (
-          <div className="alert alert-danger">
+          <div className='alert alert-danger'>
             <b>{message}</b>
-            <ul className="mb-0">
+            <ul className='mb-0'>
               {userErrors.map((err, i) => (
                 <li key={i}>{err.message}</li>
               ))}
@@ -75,76 +71,76 @@ export const ProfileView = () => {
           </div>
         )}
       </div>
-      <div className="col-md-4">
-        <div className="col-md-12 text-center">
+      <div className='col-md-4'>
+        <div className='col-md-12 text-center'>
           {isLoadingPicture ? (
             <SpinnerLoader />
           ) : (
             <img
-              className="rounded-circle img-fluid profile-picture"
+              className='rounded-circle img-fluid profile-picture'
               src={user.profileUrl}
-              alt="user-photo"
+              alt='user-photo'
             />
           )}
         </div>
         <input
-          type="file"
-          accept=".jpg,.jpeg,.png"
+          type='file'
+          accept='.jpg,.jpeg,.png'
           onChange={onUpload}
           ref={fileInputRef}
-          style={{ display: "none" }}
+          style={{ display: 'none' }}
         />
-        <span className="float-right p-2">
-          <small className="text-secondary mr-2" style={{ fontSize: "12px" }}>
+        <span className='float-right p-2'>
+          <small className='text-secondary mr-2' style={{ fontSize: '12px' }}>
             Tamaño máximo: 1MB.
           </small>
           <FontAwesomeIcon
-            style={{ cursor: "pointer" }}
+            style={{ cursor: 'pointer' }}
             onClick={() => fileInputRef.current.click()}
             icon={faUpload}
           />
         </span>
       </div>
 
-      <div className="col-md-8">
+      <div className='col-md-8'>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="mb-2">
-            <label htmlFor="fullName" className="form-label">
-              Nombre Completo{" "}
+          <div className='mb-2'>
+            <label htmlFor='fullName' className='form-label'>
+              Nombre Completo{' '}
             </label>
             <input
-              type="text"
-              className={`form-control ${errors.fullName ? "is-invalid" : ""}`}
-              id="fullName"
-              placeholder="John Doe"
-              {...register("fullName", fullNameValidations)}
+              type='text'
+              className={`form-control ${errors.fullName ? 'is-invalid' : ''}`}
+              id='fullName'
+              placeholder='John Doe'
+              {...register('fullName', fullNameValidations)}
               autoFocus
             />
-            <small className="invalid-feedback text-left">
+            <small className='invalid-feedback text-left'>
               {errors.fullName && errors.fullName.message}
             </small>
           </div>
-          <div className="mb-2">
-            <label htmlFor="email" className="form-label">
-              Email{" "}
+          <div className='mb-2'>
+            <label htmlFor='email' className='form-label'>
+              Email{' '}
             </label>
             <input
-              type="text"
-              className={`form-control ${errors.email ? "is-invalid" : ""}`}
-              id="email"
-              placeholder="johndoe@email.com"
-              {...register("email", emailValidations)}
+              type='text'
+              className={`form-control ${errors.email ? 'is-invalid' : ''}`}
+              id='email'
+              placeholder='johndoe@email.com'
+              {...register('email', emailValidations)}
             />
-            <small className="invalid-feedback text-left">
+            <small className='invalid-feedback text-left'>
               {errors.email && errors.email.message}
             </small>
           </div>
 
-          <button type="submit" className="btn btn-dark mt-2 float-right">
+          <button type='submit' className='btn btn-dark mt-2 float-right'>
             <FontAwesomeIcon icon={faCheck} /> Guardar
           </button>
         </form>
       </div>
     </div>
-  );
-};
+  )
+}

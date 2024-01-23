@@ -9,6 +9,7 @@ import { LandingPage } from '../app/pages'
 import { useAuthStore } from '../hooks'
 import { authStatus } from '../data/data'
 import { AuthLoader } from '../ui'
+import { useCartStore } from '../hooks/useCartStore'
 
 export const AppRouter = () => {
   const {
@@ -17,9 +18,17 @@ export const AppRouter = () => {
     startCheckingToken,
   } = useAuthStore()
 
+  const { startLoadingCart } = useCartStore()
+
+  // Check Token
   useEffect(() => {
     startCheckingToken()
   }, [])
+
+  // Load Cart
+  useEffect(() => {
+    startLoadingCart()
+  }, [currentStatus])
 
   if (currentStatus === authStatus[0]) return <AuthLoader />
 

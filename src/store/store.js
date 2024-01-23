@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore } from '@reduxjs/toolkit'
 
 import {
   authSlice,
@@ -8,13 +8,15 @@ import {
   bookingsSlice,
   settingSlice,
   barbersSlice,
-} from "./";
+  cartSlice,
+} from './'
 
 export const store = configureStore({
   reducer: {
     auth: authSlice.reducer,
     booking: bookingsSlice.reducer,
     barber: barbersSlice.reducer,
+    cart: cartSlice.reducer,
     service: serviceSlice.reducer,
     setting: settingSlice.reducer,
     review: reviewsSlice.reducer,
@@ -24,4 +26,4 @@ export const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: false,
     }),
-});
+})

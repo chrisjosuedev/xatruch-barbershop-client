@@ -1,24 +1,24 @@
-export const alertInfo = (title, icon, confirmText) => {
+export const alertInfo = (title, icon, confirmText, cancel = 'No') => {
   return {
     title,
     icon,
     customClass: {
-      confirmButton: "btn btn-dark mr-2",
-      cancelButton: "btn btn-danger",
+      confirmButton: 'btn btn-dark mr-2',
+      cancelButton: 'btn btn-danger',
     },
     confirmButtonText: confirmText,
-    cancelButtonText: "No",
+    cancelButtonText: cancel,
     showCancelButton: true,
     buttonsStyling: false,
-  };
-};
+  }
+}
 
-export const alertSuccess = (title, icon = "success") => {
+export const alertSuccess = (title, icon = 'success') => {
   return {
-    position: "center",
+    position: 'center',
     icon,
     title,
     showConfirmButton: false,
     timer: 2500,
-  };
-};
+  }
+}

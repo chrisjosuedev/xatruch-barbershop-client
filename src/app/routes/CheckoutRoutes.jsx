@@ -1,20 +1,15 @@
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
+import { CartPage } from '../pages/checkout/CartPage'
+import { PickTimePage } from '../pages/checkout/PickTime'
+import { useCartStore } from '../../hooks/useCartStore'
 
 export const CheckoutRoutes = () => {
-  /**
-   * If Cart.isEmpty() -> Show Cart Empty View/Component [not continue...]
-   * TODO:
-   * Checkout routes
-   * /checkout/my-cart/ (Empty if nothing...)
-   * /checkout/pick-a-time
-   * /checkout/purchase (just allow if user picked a schedule...)
-   * /checkout/detail [booking detail info]
-   */
+  const { cart } = useCartStore()
 
   return (
     <Routes>
-      {/* <Route path="/pick-a-time" element={} />
-      <Route path="/purchase" element={} /> */}
+      <Route path='/my-cart' element={<CartPage />} />
+      {cart.length > 0 && <Route path='/pick-a-time' element={<PickTimePage />} />}
       <Route path='/*' element={<Navigate to={'/my-cart'} />} />
     </Routes>
   )

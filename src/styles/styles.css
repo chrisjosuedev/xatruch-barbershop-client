@@ -9,7 +9,7 @@ html {
 }
 
 body {
-  font-family: "Inter";
+  font-family: 'Inter';
   width: 100%;
 }
 
@@ -57,7 +57,6 @@ body {
 .container-fluid {
   padding: 1% 15% 10%;
 }
-
 
 .nav-item {
   padding: 0 1.125rem;
@@ -192,7 +191,6 @@ h1 {
 .btn-sidebar:hover {
   background-color: rgb(241, 241, 241);
 }
-
 
 .side-active {
   background-color: rgb(241, 241, 241);
@@ -599,7 +597,7 @@ footer {
 
 .note {
   margin-left: 10px;
-  font-family: "Nanum Pen Script", cursive;
+  font-family: 'Nanum Pen Script', cursive;
   color: #2ec5ce;
   font-size: 1.2rem;
 }
@@ -660,11 +658,16 @@ footer {
   left: -50px !important;
 }
 
-.customDatePickerWidth, 
-.customDatePickerWidth > div.react-datepicker-wrapper, 
-.customDatePickerWidth > div > div.react-datepicker__input-container
-.customDatePickerWidth > div > div.react-datepicker__input-container input {
-   width: 100%;
+.customDatePickerWidth,
+.customDatePickerWidth > div.react-datepicker-wrapper,
+.customDatePickerWidth
+  > div
+  > div.react-datepicker__input-container
+  .customDatePickerWidth
+  > div
+  > div.react-datepicker__input-container
+  input {
+  width: 100%;
 }
 
 @media (max-width: 768px) {
@@ -710,6 +713,35 @@ footer {
     text-align: center;
   }
 }
+
+.cart-icon {
+  position: absolute;
+  font-size: 1em;
+}
+
+.cart-number-badge {
+  padding: 2px;
+  background-color: rgb(63, 63, 63);
+  color: white;
+  border-radius: 100%;
+  position: relative;
+  width: 1rem;
+  height: 1rem;
+  left: 10px;
+  top: -12px;
+}
+
+.check-cart {
+  font-size: 1.5rem;
+  text-align: center;
+  margin-right: 20px;
+  color: green;
+}
+
+.check-cart-title {
+  font-size: 12px;
+}
+
 
 @media (max-width: 1200px) {
   html,

@@ -1,18 +1,32 @@
-import { useState } from 'react'
-
+import { useNavigate } from 'react-router-dom'
+import Swal from 'sweetalert2'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCartPlus } from '@fortawesome/free-solid-svg-icons'
+import { faCartPlus, faCircleCheck } from '@fortawesome/free-solid-svg-icons'
+import { useCartStore } from '../../../hooks/useCartStore'
+import { useAuthStore } from '../../../hooks'
+import { authStatus } from '../../../data/data'
+import { alertInfo } from '../../../helpers'
 
 export const CardDetailService = ({ id, serviceName, price }) => {
-  const [toCart, setToCart] = useState(true)
+  const navigate = useNavigate()
 
-  /* TODO: Check elements in Store are in Cart, when ADD TO CART, check if auth, if not, redirect
-    to signIn and then, back to Services Routes....
-  */
+  const { currentStatus } = useAuthStore()
+  const { startAddingToCart, checkServiceInCart } = useCartStore()
 
-  const onToCart = (id) => {
-    console.log('Service Id: ' + id)
-    setToCart(!toCart)
+  const onAddToCart = (id) => {
+    if (currentStatus === authStatus[2]) {
+      const logoutInfo = alertInfo(
+        'Inicie sesión para agendar un cita',
+        'info',
+        'Sign In',
+        'Mas tarde'
+      )
+      Swal.fire(logoutInfo).then((result) => {
+        if (result.isConfirmed) navigate('/auth/signin')
+      })
+      return
+    }
+    startAddingToCart(id)
   }
 
   return (
@@ -23,10 +37,21 @@ export const CardDetailService = ({ id, serviceName, price }) => {
             <h5 className='card-title'>{serviceName}</h5>
             <p className='card-text'>L. {price.toFixed(2)}</p>
           </div>
-          <div className='col-md-4 text-right'>
-            <button onClick={() => onToCart(id)} className='btn btn-dark'>
-              <FontAwesomeIcon icon={faCartPlus} />
-            </button>
+          <div className='col-md-4'>
+            {checkServiceInCart(id) ? (
+              <div className='text-right'>
+                <FontAwesomeIcon className='check-cart' icon={faCircleCheck} />
+                <div className='check-cart-title'>
+                  <b>AGREGADO</b>
+                </div>
+              </div>
+            ) : (
+              <div className='text-right'>
+                <button onClick={() => onAddToCart(id)} className='btn btn-dark'>
+                  <FontAwesomeIcon icon={faCartPlus} />
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
