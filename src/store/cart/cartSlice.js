@@ -4,11 +4,23 @@ export const cartSlice = createSlice({
   name: 'cart',
   initialState: {
     cart: [],
+    availableBarbers: [],
+    sessionBooked: null,
+    isProcessing: false,
     message: undefined,
   },
   reducers: {
     onAddToCart: (state, { payload }) => {
       state.cart.push(payload)
+    },
+    onProcessing: (state) => {
+      state.isProcessing = true
+    },
+    onAddSession: (state, { payload }) => {
+      state.sessionBooked = payload.sessionBooked
+      state.message = payload.message
+      state.isProcessing = false
+      state.cart = []
     },
     onDeleteFromCart: (state, { payload }) => {
       state.cart = state.cart.filter((servCart) => servCart.serviceId !== payload.id)
@@ -20,14 +32,29 @@ export const cartSlice = createSlice({
         if (!exists) state.cart.push(item)
       })
     },
+    onLoadAvailableBarbers: (state, { payload }) => {
+      state.availableBarbers = payload
+    },
     onClearMessage: (state) => {
       state.message = undefined
     },
     onLogoutCart: (state) => {
       state.cart = []
+      state.availableBarbers = []
+      state.message = undefined
+      state.sessionBooked = null
+      state.isProcessing = false
     },
   },
 })
 
-export const { onAddToCart, onLoadCart, onLogoutCart, onClearMessage, onDeleteFromCart } =
-  cartSlice.actions
+export const {
+  onAddSession,
+  onAddToCart,
+  onClearMessage,
+  onDeleteFromCart,
+  onLoadAvailableBarbers,
+  onLoadCart,
+  onLogoutCart,
+  onProcessing,
+} = cartSlice.actions

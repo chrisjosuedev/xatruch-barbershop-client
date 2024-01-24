@@ -16,6 +16,7 @@ export const addToCart = async (serviceId) => {
   return data
 }
 
+
 // DELETE
 export const deleteFromCart = async (serviceId) => {
   const {

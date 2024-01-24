@@ -27,7 +27,7 @@ export const AppRouter = () => {
 
   // Load Cart
   useEffect(() => {
-    startLoadingCart()
+    if (currentStatus === authStatus[1]) startLoadingCart()
   }, [currentStatus])
 
   if (currentStatus === authStatus[0]) return <AuthLoader />

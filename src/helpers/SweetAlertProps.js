@@ -13,12 +13,12 @@ export const alertInfo = (title, icon, confirmText, cancel = 'No') => {
   }
 }
 
-export const alertSuccess = (title, icon = 'success') => {
+export const alertSuccess = (title, icon = 'success', timer = 2500) => {
   return {
     position: 'center',
     icon,
     title,
     showConfirmButton: false,
-    timer: 2500,
+    timer,
   }
 }

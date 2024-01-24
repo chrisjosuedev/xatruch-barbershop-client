@@ -1,10 +1,23 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { addToCart, deleteFromCart, getCart } from '../api'
+import {
+  addToCart,
+  createBooking,
+  deleteFromCart,
+  getBarbersAvailability,
+  getCart,
+} from '../api'
 import { onAddToCart, onDeleteFromCart, onLoadCart } from '../store'
-import { onClearMessage } from '../store/cart/cartSlice'
+import {
+  onAddSession,
+  onClearMessage,
+  onLoadAvailableBarbers,
+  onProcessing,
+} from '../store/cart/cartSlice'
 
 export const useCartStore = () => {
-  const { cart, message } = useSelector((state) => state.cart)
+  const { cart, message, availableBarbers, sessionBooked, isProcessing } = useSelector(
+    (state) => state.cart
+  )
   const dispatch = useDispatch()
 
   // Start Loading Cart
@@ -28,20 +41,50 @@ export const useCartStore = () => {
     }, 3)
   }
 
-  // Star Check in Cart
+  // Check in Cart
   const checkServiceInCart = (id) => {
     return cart.some((item) => item.serviceId === id)
+  }
+
+  // Start Loading Barbers
+  const startLoadingAvailableBarbers = async (barberId, date) => {
+    const barbers = await getBarbersAvailability(barberId, date)
+    dispatch(onLoadAvailableBarbers(barbers))
+  }
+
+  // Start Adding Booking Session
+  const startAddingSession = async (session) => {
+    dispatch(onProcessing())
+    try {
+      const { sessionBooking, message } = await createBooking(session)
+      dispatch(
+        onAddSession({
+          sessionBooked: sessionBooking,
+          message: `${message} Detalle con código ${sessionBooking.id} enviado a su correo electrónico.`,
+        })
+      )
+      setTimeout(() => {
+        dispatch(onClearMessage())
+      }, 5000)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return {
     // props
     cart,
     message,
+    availableBarbers,
+    sessionBooked,
+    isProcessing,
 
     // methods
     startAddingToCart,
     checkServiceInCart,
     startLoadingCart,
     startDeletingFromCart,
+    startLoadingAvailableBarbers,
+    startAddingSession,
   }
 }
