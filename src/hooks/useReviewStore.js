@@ -55,8 +55,12 @@ export const useReviewStore = () => {
 
   // Start Loading Aproved Reviews
   const startLoadingApprovedReviews = async () => {
-    const reviews = await getReviews(true)
-    dispatch(onLoadApprovedReviews(reviews))
+    try {
+      const reviews = await getReviews(true)
+      dispatch(onLoadApprovedReviews(reviews))
+    } catch (error) {
+      dispatch(onLoadApprovedReviews([]))
+    }
   }
 
   // Start Approving Reviews
