@@ -72,15 +72,11 @@ export const AuthForm = () => {
               {errors.password && errors.password.message}
             </small>
           </div>
-          <div className='form-group text-center mt-2'>
-            <Link className='signup-link' to={'/auth/forgot-password/request'}>
-              ¿Olvidó su contraseña?
-            </Link>
+          <div className='form-row mt-2'>
+            <button type='submit' className='btn btn-dark btn-login btn-block'>
+              Login
+            </button>
           </div>
-
-          <button type='submit' className='btn btn-dark btn-login btn-block'>
-            Login
-          </button>
         </form>
         <br />
         <div className='mx-auto'>

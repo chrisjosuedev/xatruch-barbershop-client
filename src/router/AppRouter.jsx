@@ -6,7 +6,7 @@ import { AdminRoutes, CheckoutRoutes, UserRoutes } from '../app/routes'
 
 import { ServicesPage } from '../app/pages/ServicesPage'
 import { LandingPage } from '../app/pages'
-import { useAuthStore } from '../hooks'
+import { useAuthStore, useReviewStore } from '../hooks'
 import { authStatus } from '../data/data'
 import { AuthLoader } from '../ui'
 import { useCartStore } from '../hooks/useCartStore'
@@ -19,6 +19,7 @@ export const AppRouter = () => {
   } = useAuthStore()
 
   const { startLoadingCart } = useCartStore()
+  const { startLoadingApprovedReviews } = useReviewStore()
 
   // Check Token
   useEffect(() => {
@@ -29,6 +30,11 @@ export const AppRouter = () => {
   useEffect(() => {
     if (currentStatus === authStatus[1]) startLoadingCart()
   }, [currentStatus])
+
+  // Load Reviews Landing
+  useEffect(() => {
+    startLoadingApprovedReviews()
+  }, [])
 
   if (currentStatus === authStatus[0]) return <AuthLoader />
 

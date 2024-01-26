@@ -4,6 +4,7 @@ export const reviewsSlice = createSlice({
   name: 'review',
   initialState: {
     reviews: [],
+    approvedReviews: [],
     activeReview: null,
     isLoadingReviews: true,
     reviewsToApprove: [],
@@ -66,12 +67,16 @@ export const reviewsSlice = createSlice({
     onSetMessage: (state, { payload }) => {
       state.message = payload
     },
+    onLoadApprovedReviews: (state, { payload }) => {
+      state.approvedReviews = payload
+    },
     onLogoutReviews: (state) => {
       state.reviews = []
       state.activeReview = null
       state.isLoadingReviews = true
       state.reviewsToApprove = []
       state.message = undefined
+      state.approvedReviews = []
     },
   },
 })
@@ -88,5 +93,6 @@ export const {
   onUpdateReview,
   onUpdateApprovedReviews,
   onLogoutReviews,
+  onLoadApprovedReviews,
   onSetMessage,
 } = reviewsSlice.actions
