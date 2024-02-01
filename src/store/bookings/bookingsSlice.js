@@ -9,11 +9,15 @@ export const bookingsSlice = createSlice({
     bookingDetail: [],
     admin: false,
     isLoadingBookings: true,
+    isLoadingDetail: false,
   },
   reducers: {
     onLoadBookings: (state, { payload }) => {
       state.bookings = payload
       state.isLoadingBookings = false
+    },
+    onSetLoadingDetail: (state, { payload }) => {
+      state.isLoadingDetail = payload
     },
     onSetUserBookingDetail: (state, { payload }) => {
       state.userbookingDetail = payload
@@ -40,4 +44,5 @@ export const {
   onSetActiveBooking,
   onSetUserBookingDetail,
   onSetView,
+  onSetLoadingDetail,
 } = bookingsSlice.actions
