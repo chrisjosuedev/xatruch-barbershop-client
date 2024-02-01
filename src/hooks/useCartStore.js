@@ -60,7 +60,7 @@ export const useCartStore = () => {
       dispatch(
         onAddSession({
           sessionBooked: sessionBooking,
-          message: `${message} Detalle con código ${sessionBooking.id} enviado a su correo electrónico.`,
+          message,
         })
       )
       setTimeout(() => {
