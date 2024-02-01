@@ -12,11 +12,11 @@ export const reviewsSlice = createSlice({
   },
   reducers: {
     onAddNewReview: (state, { payload }) => {
-      state.userReviews.push(payload.reviewSaved)
+      state.reviews.push(payload.reviewSaved)
       state.message = payload.message
     },
     onUpdateReview: (state, { payload }) => {
-      state.userReviews = state.userReviews.map((review) => {
+      state.reviews = state.reviews.map((review) => {
         if (payload.reviewUpdated.id !== review.id) return review
         return payload.reviewUpdated
       })
@@ -24,7 +24,7 @@ export const reviewsSlice = createSlice({
       state.activeReview = null
     },
     onDeleteReview: (state, { payload }) => {
-      state.userReviews = state.userReviews.filter((review) => {
+      state.reviews = state.reviews.filter((review) => {
         return review.id !== state.activeReview.id
       })
       state.message = payload.message
@@ -46,7 +46,7 @@ export const reviewsSlice = createSlice({
       state.activeReview = payload
     },
     onFindUserReview: (state, { payload }) => {
-      state.activeReview = state.userReviews.find((review) => review.id === payload.id)
+      state.activeReview = state.reviews.find((review) => review.id === payload.id)
     },
     onApproveReviews: (state, { payload }) => {
       if (!state.reviewsToApprove.includes(payload)) {
@@ -76,7 +76,6 @@ export const reviewsSlice = createSlice({
       state.isLoadingReviews = true
       state.reviewsToApprove = []
       state.message = undefined
-      state.approvedReviews = []
     },
   },
 })
